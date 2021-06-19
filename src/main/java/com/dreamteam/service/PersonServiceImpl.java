@@ -18,8 +18,9 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public void personDelete(int id, Users users) {
+    public boolean personDelete(int id, Users users) {
         boolean delete = new PersonDaoImpl().personDelete(id, users);
+        return delete;
     }
 
     @Override

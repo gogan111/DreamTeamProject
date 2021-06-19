@@ -11,7 +11,7 @@ public interface PersonService {
 
     public Person getPerson(int id, Users users);
 
-    public void personDelete(int id, Users users);
+    public boolean personDelete(int id, Users users);
 
     public int saveOrUpdate(Person person, Users users);
 }
