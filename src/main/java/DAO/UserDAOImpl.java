@@ -24,6 +24,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+
     public User getUser(int id) {
         String idSelect = "SELECT * FROM users WHERE id = ?";
         User user = new User();
