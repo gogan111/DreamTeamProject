@@ -1,8 +1,7 @@
-package ru.zateev.javaee_jdbc.connection;
+package com.dreamteam.connection;
 
-import ru.zateev.javaee_jdbc.users.UserImpl1;
-import ru.zateev.javaee_jdbc.users.Users;
-
+import com.dreamteam.users.UserImpl1;
+import com.dreamteam.users.Users;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

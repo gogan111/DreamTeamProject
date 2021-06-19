@@ -1,9 +1,8 @@
-package ru.zateev.javaee_jdbc.service;
+package com.dreamteam.service;
 
-import ru.zateev.javaee_jdbc.Entity.Person;
-import ru.zateev.javaee_jdbc.dao.PersonDao;
-import ru.zateev.javaee_jdbc.dao.PersonDaoImpl;
-import ru.zateev.javaee_jdbc.users.Users;
+import com.dreamteam.Entity.Person;
+import com.dreamteam.dao.PersonDaoImpl;
+import com.dreamteam.users.Users;
 
 import java.util.List;
 
@@ -24,8 +23,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public void saveOrUpdate(Person person, Users users) {
-        boolean saveOrUpdate = new PersonDaoImpl().saveOrUpdate(person, users);
+    public int saveOrUpdate(Person person, Users users) {
+        return new PersonDaoImpl().saveOrUpdate(person, users);
     }
 
 }

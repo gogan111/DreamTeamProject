@@ -1,7 +1,7 @@
-package ru.zateev.javaee_jdbc.service;
+package com.dreamteam.service;
 
-import ru.zateev.javaee_jdbc.Entity.Person;
-import ru.zateev.javaee_jdbc.users.Users;
+import com.dreamteam.Entity.Person;
+import com.dreamteam.users.Users;
 
 import java.util.List;
 
@@ -13,5 +13,5 @@ public interface PersonService {
 
     public void personDelete(int id, Users users);
 
-    public void saveOrUpdate(Person person, Users users);
+    public int saveOrUpdate(Person person, Users users);
 }

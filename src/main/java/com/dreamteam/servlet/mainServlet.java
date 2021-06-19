@@ -1,4 +1,4 @@
-package dreamTeam.servlet;
+package com.dreamteam.servlet;
 
 //import javax.servlet.ServletConfig;
 //import javax.servlet.ServletException;

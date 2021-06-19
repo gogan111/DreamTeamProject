@@ -1,4 +1,4 @@
-package users;
+package com.dreamteam.users;
 
 public interface Users {
 

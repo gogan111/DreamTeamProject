@@ -1,9 +1,10 @@
-package ru.zateev.javaee_jdbc.dao;
+package com.dreamteam.dao;
 
-import ru.zateev.javaee_jdbc.Entity.Person;
-import ru.zateev.javaee_jdbc.connection.Connect;
-import ru.zateev.javaee_jdbc.users.Users;
 
+import com.dreamteam.Entity.Person;
+
+import com.dreamteam.users.Users;
+import com.dreamteam.connection.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,21 +98,32 @@ public class PersonDaoImpl implements PersonDao {
     }
 
     @Override
-    public boolean saveOrUpdate(Person person, Users users) {
+    public int saveOrUpdate(Person person, Users users) {
+        int id = 0;
         try (Connection connection = new Connect().newInstance()) {
             try {
                 PreparedStatement ps;
                 if (person.getId() != 0) {
                     ps = connection.prepareStatement(users.getUPDATE_DATA() + person.getId());
+                    id = person.getId();
                 } else {
                     ps = connection.prepareStatement(users.getSAVE_DATA(), Statement.RETURN_GENERATED_KEYS);
+
+
+
+
                 }
                 ps.setString(1, person.getName());
                 ps.setString(2, person.getSurname());
                 ps.setInt(3, person.getAge());
                 ps.setString(4, person.getMail());
                 ps.executeUpdate();
-
+                if (id == 0) {
+                    ResultSet resultSet = ps.getGeneratedKeys();
+                    while (resultSet.next()) {
+                        id = resultSet.getInt(1);
+                    }
+                }
 
             } catch (SQLException e) {
                 connection.rollback();
@@ -120,11 +132,11 @@ public class PersonDaoImpl implements PersonDao {
             }
             connection.commit();
             connection.setAutoCommit(true);
-            return true;
+            return id;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return 0;
     }
 
 

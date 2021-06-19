@@ -1,7 +1,8 @@
-package ru.zateev.javaee_jdbc.dao;
+package com.dreamteam.dao;
 
-import ru.zateev.javaee_jdbc.Entity.Person;
-import ru.zateev.javaee_jdbc.users.Users;
+
+import com.dreamteam.Entity.Person;
+import com.dreamteam.users.Users;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface PersonDao {
 
     public boolean personDelete(int id, Users users);
 
-    public boolean saveOrUpdate(Person person, Users users);
+    public int saveOrUpdate(Person person, Users users);
 }

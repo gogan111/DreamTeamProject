@@ -1,4 +1,4 @@
-package users;
+package com.dreamteam.users;
 
 public class UserImpl1 implements Users{
     private  String URL = "jdbc:postgresql://127.0.0.1:5432/";

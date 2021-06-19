@@ -1,4 +1,4 @@
-package dreamTeam.servlet;
+package com.dreamteam.servlet;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

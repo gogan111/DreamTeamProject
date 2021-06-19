@@ -1,9 +1,6 @@
-package ru.zateev.javaee_jdbc.Entity;
-
+package com.dreamteam.Entity;
 
 public class Person {
-
-
 
     private int id;
     private String name;
