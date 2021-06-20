@@ -1,4 +1,4 @@
-package DAO;
+package dreamTeam.DAO;
 
 import dreamTeam.domain.User;
 

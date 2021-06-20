@@ -1,6 +1,6 @@
-package DAO;
+package dreamTeam.DAO;
 
-import config.DatabaseConfig;
+import dreamTeam.config.DatabaseConfig;
 import dreamTeam.domain.User;
 
 import java.sql.PreparedStatement;
