@@ -27,17 +27,18 @@ public class UserDAOImpl implements UserDAO {
 
 
     public User getUser(int id) {
-        String idSelect = "SELECT * FROM users WHERE id = ?";
+        String setUserId = "SELECT * FROM users WHERE id = ?";
         User user = new User();
-        try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(idSelect)) {
+        try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(setUserId)) {
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                user.setId(resultSet.getInt(1));
-                user.setName(resultSet.getString(2));
-                user.setSurname(resultSet.getString(3));
-                user.setAge(resultSet.getInt(4));
-                user.setEmail(resultSet.getString(5));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    user.setId(resultSet.getInt(1));
+                    user.setName(resultSet.getString(2));
+                    user.setSurname(resultSet.getString(3));
+                    user.setAge(resultSet.getInt(4));
+                    user.setEmail(resultSet.getString(5));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,8 +47,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public void updateUser(User user) {
-        String delete = "UPDATE users set (name, surname, age, email) = (?, ?, ?, ?) WHERE id = ?";
-        try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(delete)) {
+        String updateUsr = "UPDATE users set (name, surname, age, email) = (?, ?, ?, ?) WHERE id = ?";
+
+        try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(updateUsr)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
             statement.setInt(3, user.getAge());
@@ -62,6 +64,7 @@ public class UserDAOImpl implements UserDAO {
 
     public void deleteUser(int userId) {
         String delete = "DELETE FROM users WHERE id = ?";
+
         try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(delete)) {
             statement.setInt(1, userId);
             statement.execute();
@@ -73,6 +76,7 @@ public class UserDAOImpl implements UserDAO {
     public List<User> getAllUsers() {
         List<User> usersList = new ArrayList<>();
         String query = "select * from users";
+
         try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
