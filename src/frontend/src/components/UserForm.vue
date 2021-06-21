@@ -12,6 +12,7 @@
 <script>
     export default {
         name: "UserForm",
+        props: ['addUser'],
         data() {
             return {
                 name: '',
@@ -25,6 +26,21 @@
         methods: {
             save() {
 
+                const user = {
+                    name: this.name,
+                    surname: this.surname,
+                    age: this.age,
+                    email: this.email,
+                    id: this.id
+                }
+
+                this.addUser(user)
+
+                this.id = ''
+                this.name = ''
+                this.surname = ''
+                this.age = ''
+                this.email = ''
             }
         }
     }
