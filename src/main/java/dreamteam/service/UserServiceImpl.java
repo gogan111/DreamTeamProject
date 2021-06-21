@@ -1,12 +1,15 @@
 package dreamteam.service;
 
 
+import dreamteam.DAO.UserDAO;
 import dreamteam.DAO.UserDAOImpl;
 import dreamteam.domain.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
+
 
     @Override
     public int createUser(User user) {
@@ -25,7 +28,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean deleteUser(int id) {
-
         return new UserDAOImpl().deleteUser(id);
     }
 

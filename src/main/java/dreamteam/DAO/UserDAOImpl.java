@@ -18,6 +18,7 @@ import java.util.List;
  * password - 1234
  */
 
+
 public class UserDAOImpl implements UserDAO {
     DatabaseConfig databaseConfig = new DatabaseConfig();
 
@@ -108,11 +109,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public List<User> getAllUsers() {
-        List<User> usersList = new ArrayList<>();
+
         String query = "SELECT * FROM andersen";
 
         try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
+            List<User> usersList = new ArrayList<>();
             while (resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getInt(1));
@@ -122,10 +124,13 @@ public class UserDAOImpl implements UserDAO {
                 user.setEmail(resultSet.getString(5));
                 usersList.add(user);
             }
+
+            return usersList;
+
         } catch (SQLException e) {
             System.err.println("Get all user problems");
             e.printStackTrace();
         }
-        return usersList;
+        return null;
     }
 }

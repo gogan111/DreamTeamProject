@@ -13,6 +13,10 @@ import java.util.List;
 
 /**
  * {ip_address:port}/rest/persons
+ * Post - adding new user
+ * Get - receiving a user or users
+ * Delete - deleting a user
+ * Put - changing a user
  */
 
 @Path("/persons")
@@ -26,11 +30,10 @@ public class MainController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    // Which MIME type is received from client;
     public Response addUser(User user) throws URISyntaxException {
 
         int id = new UserServiceImpl().createUser(user);
-        System.out.println(id);
+
         URI uri = new URI("/rest/persons/" + id);
 
         return Response.created(uri).build();
@@ -54,7 +57,9 @@ public class MainController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Response updateUser(@PathParam("id") int id, User user) {
+
         boolean updateUserField = new UserServiceImpl().updateUser(user);
+
         if (updateUserField) {
             return Response.ok().build();
         } else {
