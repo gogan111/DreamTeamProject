@@ -1,10 +1,10 @@
-package dreamTeam.DAO;
+package dreamTeam.service;
 
 import dreamTeam.domain.User;
-
 import java.util.List;
 
-public interface UserDAO {
+public interface UserService {
+
     int createUser(User user);
 
     User getUser(int id);
