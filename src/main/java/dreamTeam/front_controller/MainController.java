@@ -1,6 +1,7 @@
 package dreamTeam.front_controller;
 
 
+import dreamTeam.DAO.UserDAOImpl;
 import dreamTeam.domain.User;
 import dreamTeam.service.UserServiceImpl;
 
@@ -25,13 +26,13 @@ public class MainController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> getAllUsers() {
-        return new UserServiceImpl().getAllUsers();
+        return new UserServiceImpl(new UserDAOImpl()).getAllUsers();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(User user) throws URISyntaxException {
-        int id = new UserServiceImpl().createUser(user);
+        int id = new UserServiceImpl(new UserDAOImpl()).createUser(user);
         URI uri = new URI("/rest/persons/" + id);
 
         return Response.created(uri).build();
@@ -41,7 +42,7 @@ public class MainController {
     @GET
     @Path("{id}")
     public Response getUser(@PathParam("id") int id) {
-        User user = new UserServiceImpl().getUser(id);
+        User user = new UserServiceImpl(new UserDAOImpl()).getUser(id);
 
         if (user.getId() != 0) {
 
@@ -56,7 +57,7 @@ public class MainController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Response updateUser(@PathParam("id") int id, User user) {
-        boolean updateUserField = new UserServiceImpl().updateUser(user);
+        boolean updateUserField = new UserServiceImpl(new UserDAOImpl()).updateUser(user);
         if (updateUserField) {
 
             return Response.ok().build();
@@ -69,7 +70,7 @@ public class MainController {
     @DELETE
     @Path("{id}")
     public Response deletePerson(@PathParam("id") int id) {
-        boolean delete = new UserServiceImpl().deleteUser(id);
+        boolean delete = new UserServiceImpl(new UserDAOImpl()).deleteUser(id);
         if (delete) {
 
             return Response.ok().build();
