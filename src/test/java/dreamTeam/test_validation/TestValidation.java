@@ -32,7 +32,6 @@ public class TestValidation {
 
     @Test
     public void testCorrectNameSurname() {
-
         for(String correctNameSurname : listOfCorrectNameSurname){
 
         }
@@ -41,7 +40,6 @@ public class TestValidation {
 
     @Test
     public void testIncorrectNameSurname(){
-
         for(String incorrectNameSurname: listOfIncorrectNameSurname){
 
         }
@@ -49,7 +47,6 @@ public class TestValidation {
 
     @Test
     public void testCorrectAges() {
-
         for(int correctAge : listOfCorrectAges){
 
         }
@@ -58,8 +55,6 @@ public class TestValidation {
 
     @Test
     public void testIncorrectAges(){
-
-
         for(int incorrectAge : listOfIncorrectAges){
 
         }
@@ -70,7 +65,6 @@ public class TestValidation {
 
     @Test
     public void testCorrectEmails() {
-
         for(String correctEmails : listOfCorrectEmails){
 
         }
@@ -79,7 +73,6 @@ public class TestValidation {
 
     @Test
     public void testIncorrectEmails(){
-
         for(String incorrectEmails: listOfIncorrectEmails){
 
         }
