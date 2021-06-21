@@ -34,7 +34,27 @@
         },
         methods: {
             editUser(user) {
-
+                if (user.id) {
+                    alert("no action")
+                } else {
+                    fetch("rest/persons/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(user)
+                    }).then(response => {
+                            if (response.ok) {
+                                response.json()
+                                    .then(
+                                        data => this.users.push(data)
+                                    )
+                            } else {
+                                alert('not added')
+                            }
+                        }
+                    );
+                }
             },
             deleteUser(user) {
                 fetch("rest/persons/" + user.id, {method: "DELETE"})
@@ -52,7 +72,6 @@
             }
         },
     }
-
 </script>
 
 <style scoped>
