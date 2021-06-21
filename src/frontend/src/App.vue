@@ -6,8 +6,11 @@
     import UserList from "./components/UserList";
 
     export default {
-        components: {UserList}
+        components: {UserList},
+        mounted() {
+        }
     }
+
 </script>
 
 <style>

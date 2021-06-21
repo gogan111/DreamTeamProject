@@ -37,7 +37,18 @@
 
             },
             deleteUser(user) {
+                fetch("rest/persons/" + user.id, {method: "DELETE"})
+                    .then(response => {
+                            if (response.ok) {
+                                alert(response.ok + " deleted");
+                                this.users.splice(this.users.indexOf(user), 1);
+                            } else {
+                                alert('not deleted')
+                            }
+                        }
+                    )
 
+                this.user = user
             }
         },
     }
