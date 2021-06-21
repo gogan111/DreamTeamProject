@@ -25,7 +25,6 @@
 
         methods: {
             save() {
-
                 const user = {
                     name: this.name,
                     surname: this.surname,

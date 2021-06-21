@@ -8,13 +8,13 @@
 <script>
     export default {
         name: "UserRow",
-        props: ['user'],
+        props: ['user', 'editUser', 'deleteUser'],
         methods: {
             edit() {
-
+                this.editUser(this.user)
             },
             del() {
-
+                this.deleteUser(this.user)
             }
         }
     }
