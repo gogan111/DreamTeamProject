@@ -63,6 +63,7 @@
             <version>42.2.19</version>
         </dependency>
         <dependency>
+<<<<<<< HEAD
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>3.11.1</version>
@@ -92,6 +93,13 @@
 
 
 
+=======
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+>>>>>>> f4f8a6f7aee7b2232d424b92f8b220b3e2918bdd
     </dependencies>
     <properties>
         <jersey.version>2.26</jersey.version>
