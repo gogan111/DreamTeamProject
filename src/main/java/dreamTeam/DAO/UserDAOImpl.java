@@ -1,7 +1,7 @@
-package dreamteam.DAO;
+package dreamTeam.DAO;
 
-import dreamteam.config.DatabaseConfig;
-import dreamteam.domain.User;
+import dreamTeam.config.DatabaseConfig;
+import dreamTeam.domain.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +23,6 @@ public class UserDAOImpl implements UserDAO {
     DatabaseConfig databaseConfig = new DatabaseConfig();
 
     public int createUser(User user) {
-
         String insert = "INSERT INTO andersen (name, surname, age, mail) values (?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = databaseConfig
                 .getConnection()
@@ -33,12 +32,12 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setInt(3, user.getAge());
             preparedStatement.setString(4, user.getEmail());
-
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 int id = 0;
                 while (resultSet.next()) {
                     id = resultSet.getInt("id");
                 }
+
                 return id;
             } catch (SQLException e) {
                 System.err.println("Create user problems");
@@ -47,6 +46,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return 0;
     }
 
@@ -68,6 +68,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return user;
     }
 
@@ -80,15 +81,14 @@ public class UserDAOImpl implements UserDAO {
             statement.setInt(3, user.getAge());
             statement.setInt(5, user.getId());
             statement.setString(4, user.getEmail());
-
             statement.executeUpdate();
 
             return true;
-
         } catch (SQLException e) {
             System.err.println("Update user problems");
             e.printStackTrace();
         }
+
         return false;
     }
 
@@ -96,7 +96,6 @@ public class UserDAOImpl implements UserDAO {
         String delete = "DELETE FROM andersen WHERE id = ?";
 
         try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(delete)) {
-
             statement.setInt(1, userId);
             statement.execute();
 
@@ -105,13 +104,12 @@ public class UserDAOImpl implements UserDAO {
             System.err.println("Create delete problems");
             e.printStackTrace();
         }
+
         return false;
     }
 
     public List<User> getAllUsers() {
-
         String query = "SELECT * FROM andersen";
-
         try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             List<User> usersList = new ArrayList<>();
@@ -126,11 +124,11 @@ public class UserDAOImpl implements UserDAO {
             }
 
             return usersList;
-
         } catch (SQLException e) {
             System.err.println("Get all user problems");
             e.printStackTrace();
         }
+
         return null;
     }
 }

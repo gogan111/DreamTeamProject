@@ -1,8 +1,8 @@
-package dreamteam.front_controller;
+package dreamTeam.front_controller;
 
 
-import dreamteam.domain.User;
-import dreamteam.service.UserServiceImpl;
+import dreamTeam.domain.User;
+import dreamTeam.service.UserServiceImpl;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -31,9 +31,7 @@ public class MainController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(User user) throws URISyntaxException {
-
         int id = new UserServiceImpl().createUser(user);
-
         URI uri = new URI("/rest/persons/" + id);
 
         return Response.created(uri).build();
@@ -43,12 +41,13 @@ public class MainController {
     @GET
     @Path("{id}")
     public Response getUser(@PathParam("id") int id) {
-
         User user = new UserServiceImpl().getUser(id);
 
         if (user.getId() != 0) {
+
             return Response.ok(user, MediaType.APPLICATION_JSON).build();
         } else {
+
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -57,12 +56,12 @@ public class MainController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Response updateUser(@PathParam("id") int id, User user) {
-
         boolean updateUserField = new UserServiceImpl().updateUser(user);
-
         if (updateUserField) {
+
             return Response.ok().build();
         } else {
+
             return Response.notModified().build();
         }
     }
@@ -70,11 +69,12 @@ public class MainController {
     @DELETE
     @Path("{id}")
     public Response deletePerson(@PathParam("id") int id) {
-
         boolean delete = new UserServiceImpl().deleteUser(id);
         if (delete) {
+
             return Response.ok().build();
         } else {
+
             return Response.notModified().build();
         }
     }

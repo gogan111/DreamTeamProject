@@ -1,4 +1,4 @@
-package dreamteam.config;
+package dreamTeam.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

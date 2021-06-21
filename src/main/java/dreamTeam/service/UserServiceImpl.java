@@ -1,11 +1,9 @@
-package dreamteam.service;
+package dreamTeam.service;
 
 
-import dreamteam.DAO.UserDAO;
-import dreamteam.DAO.UserDAOImpl;
-import dreamteam.domain.User;
+import dreamTeam.DAO.UserDAOImpl;
+import dreamTeam.domain.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {

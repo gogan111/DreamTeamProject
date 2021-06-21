@@ -1,9 +1,7 @@
 package dreamTeam.service;
 
-import dreamteam.DAO.UserDAO;
-import dreamteam.DAO.UserDAOImpl;
-import dreamteam.domain.User;
-import dreamteam.service.UserServiceImpl;
+import dreamTeam.DAO.UserDAO;
+import dreamTeam.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

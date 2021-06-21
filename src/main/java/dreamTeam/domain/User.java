@@ -1,4 +1,4 @@
-package dreamteam.domain;
+package dreamTeam.domain;
 
 public class User {
     private int id;

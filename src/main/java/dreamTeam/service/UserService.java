@@ -1,6 +1,6 @@
-package dreamteam.service;
+package dreamTeam.service;
 
-import dreamteam.domain.User;
+import dreamTeam.domain.User;
 import java.util.List;
 
 public interface UserService {

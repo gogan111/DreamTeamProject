@@ -1,6 +1,6 @@
-package dreamteam.DAO;
+package dreamTeam.DAO;
 
-import dreamteam.domain.User;
+import dreamTeam.domain.User;
 
 import java.util.List;
 
