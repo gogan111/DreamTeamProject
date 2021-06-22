@@ -1,9 +1,24 @@
 <template>
-
-    <div>Name: <input type="text" v-model="user.name" placeholder="Enter name"></div>
-    <div>Surname: <input type="text" v-model="user.surname" placeholder="Enter surname"></div>
-    <div>Age: <input type="number" v-model="user.age" placeholder="Enter age"></div>
-    <div>Email: <input type="email" v-model="user.email" placeholder="example@email.com"></div>
+    <div>Name:
+        <input type="text" v-model="user.name"
+               placeholder="Enter name">
+        <i> {{ validator.nameError }}</i>
+    </div>
+    <div>Surname:
+        <input type="text" v-model="user.surname"
+               placeholder="Enter surname">
+        <i> {{ validator.surnameError }}</i>
+    </div>
+    <div>Age:
+        <input type="number" v-model="user.age"
+               placeholder="Enter age">
+        <i> {{ validator.ageError }}</i>
+    </div>
+    <div>Email:
+        <input type="email" v-model="user.email"
+               placeholder="example@email.com">
+        <i> {{ validator.emailError }}</i>
+    </div>
 
     <div>
         <button v-on:click="save">Save</button>
@@ -16,19 +31,25 @@
              :user="user"
              :edit-user="updateForm"
              :delete-user="deleteUser"
-
     />
 
 </template>
 
 <script>
     import UserRow from "./UserRow";
+
     export default {
         name: "UserForm",
         components: {UserRow},
 
         data() {
             return {
+                validator: {
+                    nameError: '',
+                    surnameError: '',
+                    ageError: '',
+                    emailError: '',
+                },
                 users: [],
                 user: {
                     name: '',
@@ -108,7 +129,6 @@
                         }
                     );
                 }
-
             },
             deleteUser(user) {
                 fetch("rest/persons/" + user.id, {method: "DELETE"})
@@ -128,5 +148,8 @@
 </script>
 
 <style scoped>
-
+    i {
+        color: #c12127;
+        font-size: large ;
+    }
 </style>
