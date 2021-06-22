@@ -27,21 +27,20 @@ public class UserDAOImpl implements UserDAO {
         try (PreparedStatement preparedStatement = databaseConfig
                 .getConnection()
                 .prepareStatement(insert, Statement.RETURN_GENERATED_KEYS)) {
-
+            int age = Integer.parseInt(user.getAge());
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
-            preparedStatement.setInt(3, Integer.parseInt(user.getAge()));
+            preparedStatement.setInt(3, age);
             preparedStatement.setString(4, user.getEmail());
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                int id = 0;
-                while (resultSet.next()) {
-                    id = resultSet.getInt("id");
+            if (preparedStatement.executeUpdate()!=0) {
+                try(ResultSet resultSet = preparedStatement.getGeneratedKeys()){
+                    while (resultSet.next()){
+                        int id = resultSet.getInt("id");
+                        return id;
+                    }
+                }catch (SQLException e){
+                    System.err.println("Problems created");
                 }
-
-                return id;
-            } catch (SQLException e) {
-                System.err.println("Create user problems");
-                e.printStackTrace();
             }
         } catch (SQLException e) {
             e.printStackTrace();
