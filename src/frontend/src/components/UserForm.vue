@@ -76,10 +76,12 @@
                         }
                     }).then(response => {
                             if (response.ok) {
+                                this.users.splice(this.users.indexOf(user), 1);
                                 response.json()
                                     .then(
                                         data => this.users.push(data)
                                     )
+
                             } else {
                                 alert('error')
                             }
@@ -111,7 +113,6 @@
                 fetch("rest/persons/" + user.id, {method: "DELETE"})
                     .then(response => {
                             if (response.ok) {
-                                alert(response.ok + " deleted");
                                 this.users.splice(this.users.indexOf(user), 1);
                             } else {
                                 alert('not deleted')

@@ -55,7 +55,7 @@ public class MainController {
         boolean updateUserField = new UserServiceImpl(new UserDAOImpl()).updateUser(user);
         if (updateUserField) {
 
-            return Response.ok().build();
+            return Response.ok(user).build();
         } else {
 
             return Response.notModified().build();
