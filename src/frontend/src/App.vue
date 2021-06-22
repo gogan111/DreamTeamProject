@@ -1,14 +1,13 @@
 <template>
-    <UserList/>
+    <UserForm/>
 </template>
 
 <script>
-    import UserList from "./components/UserList";
+    import UserForm from "./components/UserForm";
 
     export default {
-        components: {UserList},
-        mounted() {
-        }
+        components: {UserForm},
+
     }
 
 </script>
