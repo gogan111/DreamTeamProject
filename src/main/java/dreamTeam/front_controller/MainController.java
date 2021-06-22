@@ -44,7 +44,7 @@ public class MainController {
     public Response getUser(@PathParam("id") int id) {
         User user = new UserServiceImpl(new UserDAOImpl()).getUser(id);
 
-        if (user.getId() != 0) {
+        if (Integer.parseInt(user.getId()) != 0) {
 
             return Response.ok(user, MediaType.APPLICATION_JSON).build();
         } else {
