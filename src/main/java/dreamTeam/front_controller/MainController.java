@@ -8,7 +8,6 @@ import dreamTeam.service.UserServiceImpl;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -32,13 +31,11 @@ public class MainController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public User addUser(User user) throws URISyntaxException {
+    public Response addUser(User user) throws URISyntaxException {
         int id = new UserServiceImpl(new UserDAOImpl()).createUser(user);
         user.setId(String.valueOf(id));
-
-        return user;
+        return Response.ok(user, MediaType.APPLICATION_JSON).build();
     }
-
 
     @GET
     @Path("{id}")
