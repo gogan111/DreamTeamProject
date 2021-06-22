@@ -30,7 +30,7 @@ public class UserDAOImpl implements UserDAO {
 
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
-            preparedStatement.setInt(3, user.getAge());
+            preparedStatement.setInt(3, Integer.parseInt(user.getAge()));
             preparedStatement.setString(4, user.getEmail());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 int id = 0;
@@ -50,7 +50,6 @@ public class UserDAOImpl implements UserDAO {
         return 0;
     }
 
-
     public User getUser(int id) {
         String setUserId = "SELECT * FROM andersen WHERE id = ?";
         User user = new User();
@@ -58,10 +57,10 @@ public class UserDAOImpl implements UserDAO {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    user.setId(resultSet.getInt(1));
+                    user.setId(String.valueOf(resultSet.getInt(1)));
                     user.setName(resultSet.getString(2));
                     user.setSurname(resultSet.getString(3));
-                    user.setAge(resultSet.getInt(4));
+                    user.setAge(String.valueOf(resultSet.getInt(4)));
                     user.setEmail(resultSet.getString(5));
                 }
             }
@@ -78,8 +77,8 @@ public class UserDAOImpl implements UserDAO {
         try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(updateUsr)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
-            statement.setInt(3, user.getAge());
-            statement.setInt(5, user.getId());
+            statement.setInt(3, Integer.parseInt(user.getAge()));
+            statement.setInt(5, Integer.parseInt(user.getId()));
             statement.setString(4, user.getEmail());
             statement.executeUpdate();
 
@@ -115,10 +114,10 @@ public class UserDAOImpl implements UserDAO {
             List<User> usersList = new ArrayList<>();
             while (resultSet.next()) {
                 User user = new User();
-                user.setId(resultSet.getInt(1));
+                user.setId(String.valueOf(resultSet.getInt(1)));
                 user.setName(resultSet.getString(2));
                 user.setSurname(resultSet.getString(3));
-                user.setAge(resultSet.getInt(4));
+                user.setAge(String.valueOf(resultSet.getInt(4)));
                 user.setEmail(resultSet.getString(5));
                 usersList.add(user);
             }
