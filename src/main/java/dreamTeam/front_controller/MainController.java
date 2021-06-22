@@ -31,11 +31,12 @@ public class MainController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addUser(User user) throws URISyntaxException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public User addUser(User user) throws URISyntaxException {
         int id = new UserServiceImpl(new UserDAOImpl()).createUser(user);
-        URI uri = new URI("/rest/persons/" + id);
+        user.setId(String.valueOf(id));
 
-        return Response.created(uri).build();
+        return user;
     }
 
 
@@ -43,12 +44,9 @@ public class MainController {
     @Path("{id}")
     public Response getUser(@PathParam("id") int id) {
         User user = new UserServiceImpl(new UserDAOImpl()).getUser(id);
-
         if (Integer.parseInt(user.getId()) != 0) {
-
             return Response.ok(user, MediaType.APPLICATION_JSON).build();
         } else {
-
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -72,7 +70,6 @@ public class MainController {
     public Response deletePerson(@PathParam("id") int id) {
         boolean delete = new UserServiceImpl(new UserDAOImpl()).deleteUser(id);
         if (delete) {
-
             return Response.ok().build();
         } else {
 
