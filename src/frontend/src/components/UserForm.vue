@@ -89,7 +89,6 @@
             },
             addUser(user) {
                 if (user.id) {
-                    alert("saveing  + id")
                     fetch("rest/persons/" + user.id, {
                         body: JSON.stringify(user),
                         method: "PUT",
@@ -103,14 +102,12 @@
                                         data => this.users.push(data)
                                     )
                             } else {
-                                alert('has id not added')
+                                alert('error')
                             }
                         }
-
                     );
 
                 } else {
-                    alert("saving  no id")
                     fetch("rest/persons/", {
                         method: "POST",
                         headers: {
@@ -124,7 +121,7 @@
                                         data => this.users.push(data)
                                     )
                             } else {
-                                alert('not added')
+                                alert('error')
                             }
                         }
                     );
@@ -141,7 +138,11 @@
                             }
                         }
                     )
-                this.user = user
+                this.user.id = ''
+                this.user.name = ''
+                this.user.surname = ''
+                this.user.age = ''
+                this.user.email = ''
             }
         }
     }
