@@ -11,7 +11,6 @@
         props: ['user', 'editUser', 'deleteUser'],
         methods: {
             edit() {
-                alert("row " + this.user.name)
                 this.editUser(this.user)
             },
             del() {

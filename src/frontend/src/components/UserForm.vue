@@ -68,7 +68,6 @@
             },
             addUser(user) {
                 if (user.id) {
-                    alert("saveing  + id")
                     fetch("rest/persons/" + user.id, {
                         body: JSON.stringify(user),
                         method: "PUT",
@@ -77,19 +76,19 @@
                         }
                     }).then(response => {
                             if (response.ok) {
+                                this.users.splice(this.users.indexOf(user), 1);
                                 response.json()
                                     .then(
                                         data => this.users.push(data)
                                     )
+
                             } else {
-                                alert('has id not added')
+                                alert('error')
                             }
                         }
-
                     );
 
                 } else {
-                    alert("saving  no id")
                     fetch("rest/persons/", {
                         method: "POST",
                         headers: {
@@ -103,7 +102,7 @@
                                         data => this.users.push(data)
                                     )
                             } else {
-                                alert('not added')
+                                alert('error')
                             }
                         }
                     );
@@ -114,14 +113,17 @@
                 fetch("rest/persons/" + user.id, {method: "DELETE"})
                     .then(response => {
                             if (response.ok) {
-                                alert(response.ok + " deleted");
                                 this.users.splice(this.users.indexOf(user), 1);
                             } else {
                                 alert('not deleted')
                             }
                         }
                     )
-                this.user = user
+                this.user.id = ''
+                this.user.name = ''
+                this.user.surname = ''
+                this.user.age = ''
+                this.user.email = ''
             }
         }
     }

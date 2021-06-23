@@ -5,11 +5,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConfig {
-    private final String DB_URL = "jdbc:postgresql://localhost:5432/usersdb";
+
+//    private final String DB_URL = "jdbc:postgresql://localhost:5432/userdb";
+    private final String DB_URL = "jdbc:postgresql://localhost:5432/alex";
     // TODO: change this fields next time
     //change DB_URL database userdb->alex
-    private final String USER = "postgres";
-    private final String PASS = "123123";
+//    private final String USER = "postgres";
+//    private final String PASS = "admin";
+    private final String USER = "alex";
+    private final String PASS = "1234";
+
     Connection connection;
 
     public Connection getConnection() {
