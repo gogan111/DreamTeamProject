@@ -13,8 +13,10 @@ public class UserValidation implements Serializable {
     private String surnameError = "";
     private String emailError = "";
     private boolean error = false;
+
     public boolean validation(User user) {
         error = false;
+
         if(Validator.ageError(user.getAge())){
             ageError = "age is not valid";
             error = true;

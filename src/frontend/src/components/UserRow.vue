@@ -8,14 +8,18 @@
 <script>
     export default {
         name: "UserRow",
-        props: ['user', 'editUser', 'deleteUser'],
+        props: ['user', 'editUser', 'deleteUser', 'users'],
         methods: {
             edit() {
                 this.editUser(this.user)
             },
             del() {
                 this.deleteUser(this.user)
+
             }
+        },
+        watch: {
+
         }
     }
 </script>

@@ -5,7 +5,6 @@ import dreamTeam.DAO.UserDAOImpl;
 import dreamTeam.domain.User;
 import dreamTeam.service.UserServiceImpl;
 import dreamTeam.user_validation.UserValidation;
-import dreamTeam.validator.Validator;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -35,7 +34,7 @@ public class MainController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addUser(User user) throws URISyntaxException {
         UserValidation userValidation = new UserValidation();
-        if (userValidation.validation(user)){
+        if (userValidation.validation(user)>0){
             return Response.status(Response.Status.BAD_REQUEST).entity(userValidation).build();
         }
         int id = new UserServiceImpl(new UserDAOImpl()).createUser(user);
@@ -78,8 +77,6 @@ public class MainController {
             return Response.notModified().build();
         }
     }
-
-
 
 
 }
