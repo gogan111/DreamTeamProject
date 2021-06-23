@@ -29,14 +29,34 @@ public class MainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req,
                          HttpServletResponse resp) throws ServletException, IOException {
+        JSONObject jsonObject = new JSONObject(getBody(req));
+        if (!jsonObject.get("id").toString().equals("0")) {
+            int id = Integer.parseInt(jsonObject.getString("id"));
+            User user = new UserServiceImpl(new UserDAOImpl()).getUser(id);
+            if (user != null) {
+                String str = new JSONObject(user).toString();
+                PrintWriter out = resp.getWriter();
+                resp.setContentType("application/json");
+                resp.setCharacterEncoding("UTF-8");
+                resp.setStatus(HttpServletResponse.SC_OK);
+                out.print(str);
+                out.flush();
 
-        List<User> userList = new UserServiceImpl(new UserDAOImpl()).getAllUsers();
-        String str = new JSONArray(userList).toString();
-        PrintWriter out = resp.getWriter();
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-        out.print(str);
-        out.flush();
+            } else {
+                resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+            }
+        } else {
+            System.out.println("aaasass");
+
+            List<User> userList = new UserServiceImpl(new UserDAOImpl()).getAllUsers();
+            String str = new JSONArray(userList).toString();
+            PrintWriter out = resp.getWriter();
+            resp.setContentType("application/json");
+            resp.setCharacterEncoding("UTF-8");
+            out.print(str);
+            out.flush();
+        }
+
     }
 
     @Override
@@ -51,12 +71,12 @@ public class MainController extends HttpServlet {
         user.setAge((String) jObj.get("age"));
         user.setEmail((String) jObj.get("email"));
 
-       int id = new UserServiceImpl(new UserDAOImpl()).createUser(user);
+        int id = new UserServiceImpl(new UserDAOImpl()).createUser(user);
         System.out.println(id);
-       user.setId(String.valueOf(id));
+        user.setId(String.valueOf(id));
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-       resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setStatus(HttpServletResponse.SC_OK);
 
 
     }
@@ -82,7 +102,8 @@ public class MainController extends HttpServlet {
             out.print(str);
             out.flush();
         } else {
-            resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);;
+            resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+            ;
         }
     }
 
@@ -90,16 +111,16 @@ public class MainController extends HttpServlet {
     protected void doDelete(HttpServletRequest req,
                             HttpServletResponse resp) throws ServletException, IOException {
         JSONObject jObj = new JSONObject(getBody(req));
-       int id = Integer.parseInt(jObj.getString("id"));
+        int id = Integer.parseInt(jObj.getString("id"));
         boolean delete = new UserServiceImpl(new UserDAOImpl()).deleteUser(id);
         if (delete) {
-             resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setStatus(HttpServletResponse.SC_OK);
         } else {
             resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
         }
     }
 
-//    @GET
+    //    @GET
 //    @Produces(MediaType.APPLICATION_JSON)
 //    public List<User> getAllUsers() {
 //        return new UserServiceImpl(new UserDAOImpl()).getAllUsers();
@@ -153,39 +174,39 @@ public class MainController extends HttpServlet {
 //            return Response.notModified().build();
 //        }
 //    }
-public String getBody(HttpServletRequest request) {
+    public String getBody(HttpServletRequest request) {
 
-    String body = null;
-    StringBuilder stringBuilder = new StringBuilder();
-    BufferedReader bufferedReader = null;
+        String body = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = null;
 
-    try {
-        InputStream inputStream = request.getInputStream();
-        if (inputStream != null) {
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            char[] charBuffer = new char[128];
-            int bytesRead = -1;
-            while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
-                stringBuilder.append(charBuffer, 0, bytesRead);
+        try {
+            InputStream inputStream = request.getInputStream();
+            if (inputStream != null) {
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                char[] charBuffer = new char[128];
+                int bytesRead = -1;
+                while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
+                    stringBuilder.append(charBuffer, 0, bytesRead);
+                }
+
+                return stringBuilder.toString();
+            } else {
+                stringBuilder.append("");
             }
+        } catch (IOException ex) {
+            // throw ex;
+            return "";
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException ex) {
 
-            return stringBuilder.toString();
-        } else {
-            stringBuilder.append("");
-        }
-    } catch (IOException ex) {
-        // throw ex;
-        return "";
-    } finally {
-        if (bufferedReader != null) {
-            try {
-                bufferedReader.close();
-            } catch (IOException ex) {
-
+                }
             }
         }
+        return null;
     }
-    return null;
-}
 
 }
