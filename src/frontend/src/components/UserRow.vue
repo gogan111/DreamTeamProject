@@ -1,0 +1,29 @@
+<template>
+    <h3>{{user.id}}){{user.name}} {{user.surname}} {{user.age}} {{user.email}}
+        <button v-on:click="edit">Edit</button>
+        <button v-on:click="del">X</button>
+    </h3>
+</template>
+
+<script>
+    export default {
+        name: "UserRow",
+        props: ['user', 'editUser', 'deleteUser', 'users'],
+        methods: {
+            edit() {
+                this.editUser(this.user)
+            },
+            del() {
+                this.deleteUser(this.user)
+
+            }
+        },
+        watch: {
+
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
