@@ -7,7 +7,6 @@ import java.io.PrintWriter;
 public class ServletOperation {
 
     public static void setResponse(HttpServletResponse resp)  {
-
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.setStatus(HttpServletResponse.SC_OK);

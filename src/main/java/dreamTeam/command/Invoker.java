@@ -1,25 +1,23 @@
 package dreamTeam.command;
 
-import dreamTeam.DAO.UserDAOImpl;
-import dreamTeam.service.UserServiceImpl;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Invoker {
-
     private Map<String, Command> commands;
+    Receiver receiver;
 
-
-    public Invoker() {
+    public Invoker(Receiver receiver) {
+        this.receiver = receiver;
         commands = new HashMap<>();
-        commands.put("get", new GetAllUsersCommands(new UserServiceImpl(new UserDAOImpl())));
+        commands.put("get", new GetUsersCommands());
+        commands.put("post", new CreateCommand());
+        commands.put("put", new PutCommand());
+        commands.put("delete", new DeleteCommand());
     }
 
-    public static void selectCommand (String command){
-
+    public  void selectCommand (String command){
+        commands.get(command).execute(receiver);
     }
 
 }

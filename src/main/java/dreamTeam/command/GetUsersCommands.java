@@ -5,7 +5,7 @@ import org.json.JSONArray;
 
 import java.io.IOException;
 
-public class GetAllUsersCommands extends Command{
+public class GetUsersCommands extends Command{
     
     @Override
     public void execute(Receiver receiver) {
