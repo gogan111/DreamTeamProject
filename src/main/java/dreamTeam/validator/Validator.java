@@ -4,7 +4,7 @@ public class Validator {
     private static String error = "";
 
     public static boolean isNameValid(String name){
-        String reg = "^[A-Z][a-zA-z]+$";
+        String reg = "^[A-Z][a-zA-z]{2,20}|[А-ЯҐЄІЇЎ][\\p{IsCyrillic}]{2,20}+$";
         if(!name.matches(reg)){
             error = "The name is not valid. Use only letters";
         }
