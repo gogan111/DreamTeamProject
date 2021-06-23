@@ -1,4 +1,4 @@
-
+/*
 publicPath: process.env.NODE_ENV === 'production'
 module.exports = {
     publicPath: process.env.NODE_ENV = '',
@@ -13,19 +13,18 @@ module.exports = {
             }
         }
     }
-}
+}*/
 
 
-/*
 module.exports = {
     devServer: {
         port: 3000,
         proxy: {
             '^/rest': {
-                target: 'http://localhost:8081',
+                target: 'http://localhost:9000/',
                 ws: true,
                 changeOrigin: true
             },
         }
     }
-}*/
+}

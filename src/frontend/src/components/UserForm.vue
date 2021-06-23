@@ -36,23 +36,13 @@
         <button @keyup.enter="save" v-on:click="save">Save</button>
     </div>
 
-    <h1>List of Users</h1>
-
-    <UserRow v-for="user in users"
-             :key="user.id"
-             :user="user"
-             :edit-user="updateForm"
-             :delete-user="deleteUser"
-    />
-
 </template>
 
 <script>
-    import UserRow from "./UserRow";
-
     export default {
         name: "UserForm",
-        components: {UserRow},
+        components: {},
+        props: ['users', 'userAttr', 'validatorAttr', 'saveUser'],
         data() {
             return {
                 validator: {
@@ -61,7 +51,7 @@
                     ageError: '',
                     emailError: '',
                 },
-                users: [],
+
                 user: {
                     name: '',
                     surname: '',
@@ -71,19 +61,26 @@
                 }
             }
         },
-        mounted() {
-            fetch("rest/persons")
-                .then(response =>
-                    response.json()
-                        .then(data =>
-                            data.forEach(user => this.users.push(user))
-                        )
-                )
-            this.sortUsers()
+        watch: {
+            userAttr(newVal) {
+                this.user.id = newVal.id
+                this.user.name = newVal.name
+                this.user.surname = newVal.surname
+                this.user.age = newVal.age
+                this.user.email = newVal.email
+            },
+
+            validatorAttr(newVal) {
+                this.validator.nameError = newVal.errorName
+                this.validator.surnameError = newVal.errorSurname
+                this.validator.ageError = newVal.errorAge
+                this.validator.emailError = newVal.errorEmail
+            }
+
         },
         methods: {
             save() {
-                this.addUser(this.user)
+                this.saveUser(this.user)
             },
             updateForm(user) {
 
@@ -93,72 +90,7 @@
                 this.user.age = user.age
                 this.user.email = user.email
             },
-            addUser(user) {
-                if (user.id) {
-                    fetch("rest/persons/" + user.id, {
-                        body: JSON.stringify(user),
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                        }
-                    }).then(response => {
-                            if (response.ok) {
-                                this.users.splice(this.users.indexOf(user.id), 1);
-                                response.json()
-                                    .then(
-                                        data => this.users.push(data)
-                                    )
-                                this.clearForm()
-                                this.sortUsers()
 
-                            } else {
-                                alert('error')
-                            }
-                        }
-                    );
-
-                } else {
-                    fetch("rest/persons/", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(user)
-                    }).then(response => {
-                            if (response.ok) {
-                                response.json()
-                                    .then(
-                                        data => this.users.push(data)
-                                    )
-                                this.clearForm()
-                                this.sortUsers()
-                            } else {
-                                response.json()
-                                    .then(
-                                        data => {
-                                            this.validator.nameError = data.errorName
-                                            this.validator.surnameError = data.errorSurname
-                                            this.validator.ageError = data.errorAge
-                                            this.validator.emailError = data.errorEmail
-                                        }
-                                    )
-                            }
-                        }
-                    );
-                }
-            },
-            deleteUser(user) {
-                fetch("rest/persons/" + user.id, {method: "DELETE"})
-                    .then(response => {
-                            if (response.ok) {
-                                this.users.splice(this.users.indexOf(user), 1);
-                            } else {
-                                alert('not deleted')
-                            }
-                        }
-                    )
-                this.clearForm()
-            },
             clearForm() {
                 this.user.id = ''
                 this.user.name = ''
@@ -171,9 +103,7 @@
                 this.validator.ageError = ''
                 this.validator.emailError = ''
             },
-            sortUsers() {
-                this.users.sort((a, b) => (a.id - b.id))
-            }
+
         }
     }
 </script>
