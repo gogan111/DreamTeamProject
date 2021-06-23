@@ -36,14 +36,14 @@ public class Receiver {
             user = new UserServiceImpl(new UserDAOImpl()).getUser(id);
             if (user != null) {
                 String str = new JSONObject(user).toString();
-                 ServletOperation.setResponse(resp,str);
+                 SettingsResponseServlet.setResponse(resp,str);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
             }
         } else {
             List<User> userList = new UserServiceImpl(new UserDAOImpl()).getAllUsers();
             String str = new JSONArray(userList).toString();
-            ServletOperation.setResponse(resp,str);
+            SettingsResponseServlet.setResponse(resp,str);
         }
 
     }
@@ -58,11 +58,10 @@ public class Receiver {
         int id = new UserServiceImpl(new UserDAOImpl()).createUser(user);
 
         user.setId(String.valueOf(id));
-        ServletOperation.setResponse(resp);
+        SettingsResponseServlet.setResponse(resp);
     }
 
     public void updateUser() throws IOException {
-        User user = new User();
         JSONObject jObj = new Converter().conversionToJsonObj(req);
         user.setId(jObj.getString("id"));
         user.setName((String) jObj.get("name"));
@@ -74,8 +73,7 @@ public class Receiver {
 
         if (updateUserField) {
             String str = new JSONObject(user).toString();
-            PrintWriter out = resp.getWriter();
-            ServletOperation.setResponse(resp,str);
+            SettingsResponseServlet.setResponse(resp,str);
         } else {
             resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
         }
@@ -91,6 +89,5 @@ public class Receiver {
             resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
         }
     }
-
 
 }

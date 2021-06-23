@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class ServletOperation {
+public class SettingsResponseServlet {
 
     public static void setResponse(HttpServletResponse resp)  {
         resp.setContentType("application/json");
