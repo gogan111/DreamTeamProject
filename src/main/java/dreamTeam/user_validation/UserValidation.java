@@ -12,47 +12,24 @@ import java.io.Serializable;
 
 public class UserValidation implements Serializable {
 
-    public String errorAge;
-    public String errorName;
-    public String errorSurname;
-    public String errorEmail;
-
-    private boolean boolErrorAge;
-    private boolean boolErrorName;
-    private boolean boolErrorSurname;
-    private boolean boolErrorEmail;
-
-    public int validation(User user) {
-        initBooleanError();
-        int count = 0;
-
-        if (!Validator.isAgeValid(user.getAge())) {
-            errorAge = "Incorrect age";
-            ++count;
+    public String errorAge = "";
+    public String errorName = "";
+    public String errorSurname = "";
+    public String errorEmail = "";
+    public boolean validation(User user) {
+        if(Validator.errorAge(user.getAge())){
+            errorAge = "age is not valid";
         }
-        if (!Validator.isNameValid(user.getName())) {
-            errorName = "Incorrect name";
-            ++count;
+        if(Validator.errorName(user.getName())){
+            errorName = "name is not valid";
         }
-        if (!Validator.isNameValid(user.getSurname())) {
-            errorSurname = "Incorrect surname";
-            ++count;
+        if(Validator.errorName(user.getSurname())){
+            errorSurname = "surname is not valid";
         }
-        if (!Validator.isEmailValid(user.getEmail())) {
-            System.out.println(Validator.isEmailValid(user.getEmail()));
-            errorEmail = "Incorrect email";
-            ++count;
-            throw new IncorrectMailException("Некорректный mail");
-
+        if(Validator.errorEmail(user.getEmail())){
+            errorEmail = "email is not valid";
         }
-        return count;
-    }
-
-    public void initBooleanError() {
-        boolErrorAge = true;
-        boolErrorName = true;
-        boolErrorSurname = true;
-        boolErrorEmail = true;
+        return errorAge.equals("") && errorName.equals("") && errorSurname.equals("") && errorEmail.equals("");
     }
 
     public String getErrorAge() {

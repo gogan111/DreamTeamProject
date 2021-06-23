@@ -9,22 +9,16 @@ import java.util.List;
 
 public class ValidatorTest {
 
-    @Before
-    public void clearError(){
-        Validator.clear();
-    }
-
     @Test
     public void checkCorrectName() {
         List<String> strings = new ArrayList<>();
         strings.add("Johny");
         strings.add("Depp");
         strings.add("Leonardo");
-        strings.add("DiCaprio");
+        strings.add("Dicaprio");
         for (String name : strings) {
-            Assert.assertTrue(Validator.isNameValid(name));
+            Assert.assertFalse(Validator.errorName(name));
         }
-        Assert.assertSame("", Validator.getError());
     }
 
     @Test
@@ -35,9 +29,8 @@ public class ValidatorTest {
         strings.add("7up@gmail.com");
         strings.add("must@have.ru");
         for (String email : strings) {
-            Assert.assertTrue(Validator.isEmailValid(email));
+            Assert.assertFalse(Validator.errorEmail(email));
         }
-        Assert.assertSame("", Validator.getError());
     }
 
     @Test
@@ -48,9 +41,8 @@ public class ValidatorTest {
         strings.add("25");
         strings.add("75");
         for (String age : strings) {
-            Assert.assertTrue(Validator.isAgeValid(age));
+            Assert.assertFalse(Validator.errorAge(age));
         }
-        Assert.assertSame("", Validator.getError());
     }
 
     @Test
@@ -61,9 +53,8 @@ public class ValidatorTest {
         strings.add("@dd23%");
         strings.add("&$#@!))*");
         for (String name : strings) {
-            Assert.assertFalse(Validator.isNameValid(name));
+            Assert.assertTrue(Validator.errorName(name));
         }
-        Assert.assertNotSame("", Validator.getError());
     }
 
     @Test
@@ -74,9 +65,8 @@ public class ValidatorTest {
         strings.add("7upgmailcom");
         strings.add("#$@@###>##");
         for (String email : strings) {
-            Assert.assertFalse(Validator.isEmailValid(email));
+            Assert.assertTrue(Validator.errorEmail(email));
         }
-        Assert.assertNotSame("", Validator.getError());
     }
 
     @Test
@@ -87,9 +77,8 @@ public class ValidatorTest {
         strings.add("-12");
         strings.add("120");
         for (String age : strings) {
-            Assert.assertFalse(Validator.isAgeValid(age));
+            Assert.assertTrue(Validator.errorAge(age));
         }
-        Assert.assertNotSame("", Validator.getError());
     }
 
 }

@@ -50,7 +50,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public User getUser(int id) {
-        String setUserId = "SELECT * FROM andersen WHERE id = ?";
+        String setUserId = "SELECT id,name,surname,age,mail FROM andersen WHERE id = ?";
         User user = new User();
         try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(setUserId)) {
             statement.setInt(1, id);
@@ -107,7 +107,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public List<User> getAllUsers() {
-        String query = "SELECT * FROM andersen";
+        String query = "SELECT id,name,surname,age,mail FROM andersen";
         try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             List<User> usersList = new ArrayList<>();
