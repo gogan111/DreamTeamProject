@@ -8,24 +8,34 @@ import java.io.Serializable;
 
 public class UserValidation implements Serializable {
 
-    public String ageError = "";
-    public String nameError = "";
-    public String surnameError = "";
-    public String emailError = "";
+    private String ageError = "";
+    private String nameError = "";
+    private String surnameError = "";
+    private String emailError = "";
+    private boolean error = false;
     public boolean validation(User user) {
+        error = false;
         if(Validator.ageError(user.getAge())){
             ageError = "age is not valid";
+            error = true;
         }
         if(Validator.nameError(user.getName())){
             nameError = "name is not valid";
+            error = true;
         }
         if(Validator.nameError(user.getSurname())){
             surnameError = "surname is not valid";
+            error = true;
         }
         if(Validator.emailError(user.getEmail())){
             emailError = "email is not valid";
+            error = true;
         }
-        return ageError.equals("") && nameError.equals("") && surnameError.equals("") && emailError.equals("");
+        return error;
+    }
+
+    public boolean isError() {
+        return error;
     }
 
     public String getAgeError() {
