@@ -3,15 +3,16 @@ package dreamTeam.command;
 import dreamTeam.service.UserService;
 import org.json.JSONArray;
 
+import java.io.IOException;
+
 public class GetAllUsersCommands extends Command{
-
-
-    public GetAllUsersCommands(UserService userService) {
-        this.userService = userService;
-    }
-
+    
     @Override
-    public void execute() {
-
+    public void execute(Receiver receiver) {
+        try {
+            receiver.executeGetAllUsers();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

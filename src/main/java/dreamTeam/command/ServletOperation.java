@@ -1,19 +1,25 @@
 package dreamTeam.command;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class ServletOperation {
-    private HttpServletRequest httpServletRequest;
-    private HttpServletResponse httpServletResponse;
 
-    public ServletOperation(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        this.httpServletRequest = httpServletRequest;
-        this.httpServletResponse = httpServletResponse;
+    public static void setResponse(HttpServletResponse resp)  {
+
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setStatus(HttpServletResponse.SC_OK);
     }
 
-    public void responseData(){
-
+    public static void setResponse (HttpServletResponse resp, String str) throws IOException {
+        PrintWriter out = resp.getWriter();
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setStatus(HttpServletResponse.SC_OK);
+        out.print(str);
+        out.flush();
     }
 
 }

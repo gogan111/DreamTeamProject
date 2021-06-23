@@ -1,7 +1,5 @@
 package dreamTeam.command;
 
-import dreamTeam.domain.User;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,19 +7,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 
 public class Converter {
 
-
-    public String conversionToJson(List<User> userList){
-
-        return new JSONArray(userList).toString();
-    }
-
-
-    public void conversionJsonToString (HttpServletRequest httpServletRequest){
-
+    public JSONObject conversionToJsonObj (HttpServletRequest req){
+        return new JSONObject(getBody(req));
     }
 
     public String getBody(HttpServletRequest request) {
