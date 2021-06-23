@@ -1,16 +1,16 @@
 package dreamTeam.domain;
 
 public class User {
-    private int id;
+    private String id;
     private String name;
     private String surname;
-    private int age;
+    private String age;
     private String email;
 
     public User() {
     }
 
-    public User(int id, String name, String surname, int age, String email) {
+    public User(String id, String name, String surname, String age, String email) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -18,18 +18,18 @@ public class User {
         this.email = email;
     }
 
-    public User(String name, String surname, int age, String email) {
+    public User(String name, String surname, String age, String email) {
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.email = email;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,11 +49,11 @@ public class User {
         this.surname = surname;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

@@ -34,11 +34,11 @@ public class TestUserService {
         user.setName("Aleksey");
         user.setSurname("Ivanov");
         user.setEmail("asda@mail.com");
-        user.setAge(22);
+        user.setAge("22");
         user1.setName("Ivan");
         user1.setSurname("Andreev");
         user1.setEmail("asdas@mail.com");
-        user1.setAge(33);
+        user1.setAge("33");
         userList.add(user);
         userList.add(user1);
     }

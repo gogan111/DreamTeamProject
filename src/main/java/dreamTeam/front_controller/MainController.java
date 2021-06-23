@@ -4,11 +4,11 @@ package dreamTeam.front_controller;
 import dreamTeam.DAO.UserDAOImpl;
 import dreamTeam.domain.User;
 import dreamTeam.service.UserServiceImpl;
+import dreamTeam.user_validation.UserValidation;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -31,24 +31,24 @@ public class MainController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response addUser(User user) throws URISyntaxException {
+        UserValidation userValidation = new UserValidation();
+        if (userValidation.validation(user)){
+            return Response.status(Response.Status.BAD_REQUEST).entity(userValidation).build();
+        }
         int id = new UserServiceImpl(new UserDAOImpl()).createUser(user);
-        URI uri = new URI("/rest/persons/" + id);
-
-        return Response.created(uri).build();
+        user.setId(String.valueOf(id));
+        return Response.ok(user, MediaType.APPLICATION_JSON).build();
     }
-
 
     @GET
     @Path("{id}")
     public Response getUser(@PathParam("id") int id) {
         User user = new UserServiceImpl(new UserDAOImpl()).getUser(id);
-
-        if (user.getId() != 0) {
-
+        if (Integer.parseInt(user.getId()) != 0) {
             return Response.ok(user, MediaType.APPLICATION_JSON).build();
         } else {
-
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -60,7 +60,7 @@ public class MainController {
         boolean updateUserField = new UserServiceImpl(new UserDAOImpl()).updateUser(user);
         if (updateUserField) {
 
-            return Response.ok().build();
+            return Response.ok(user).build();
         } else {
 
             return Response.notModified().build();
@@ -72,10 +72,8 @@ public class MainController {
     public Response deletePerson(@PathParam("id") int id) {
         boolean delete = new UserServiceImpl(new UserDAOImpl()).deleteUser(id);
         if (delete) {
-
             return Response.ok().build();
         } else {
-
             return Response.notModified().build();
         }
     }
