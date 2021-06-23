@@ -1,6 +1,6 @@
 package dreamTeam.domain;
 
-import dreamTeam.execute.Command;
+import dreamTeam.commands.Command;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
