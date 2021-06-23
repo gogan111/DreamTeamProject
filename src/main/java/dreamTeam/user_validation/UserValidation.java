@@ -1,50 +1,46 @@
 package dreamTeam.user_validation;
 
 
-import dreamTeam.GlobalException.GlobalException;
-import dreamTeam.GlobalException.IncorrectMailException;
 import dreamTeam.domain.User;
 import dreamTeam.validator.Validator;
 
-import javax.json.bind.annotation.JsonbTypeSerializer;
-import java.beans.Transient;
 import java.io.Serializable;
 
 public class UserValidation implements Serializable {
 
-    public String errorAge = "";
-    public String errorName = "";
-    public String errorSurname = "";
-    public String errorEmail = "";
+    public String ageError = "";
+    public String nameError = "";
+    public String surnameError = "";
+    public String emailError = "";
     public boolean validation(User user) {
-        if(Validator.errorAge(user.getAge())){
-            errorAge = "age is not valid";
+        if(Validator.ageError(user.getAge())){
+            ageError = "age is not valid";
         }
-        if(Validator.errorName(user.getName())){
-            errorName = "name is not valid";
+        if(Validator.nameError(user.getName())){
+            nameError = "name is not valid";
         }
-        if(Validator.errorName(user.getSurname())){
-            errorSurname = "surname is not valid";
+        if(Validator.nameError(user.getSurname())){
+            surnameError = "surname is not valid";
         }
-        if(Validator.errorEmail(user.getEmail())){
-            errorEmail = "email is not valid";
+        if(Validator.emailError(user.getEmail())){
+            emailError = "email is not valid";
         }
-        return errorAge.equals("") && errorName.equals("") && errorSurname.equals("") && errorEmail.equals("");
+        return ageError.equals("") && nameError.equals("") && surnameError.equals("") && emailError.equals("");
     }
 
-    public String getErrorAge() {
-        return errorAge;
+    public String getAgeError() {
+        return ageError;
     }
 
-    public String getErrorName() {
-        return errorName;
+    public String getNameError() {
+        return nameError;
     }
 
-    public String getErrorSurname() {
-        return errorSurname;
+    public String getSurnameError() {
+        return surnameError;
     }
 
-    public String getErrorEmail() {
-        return errorEmail;
+    public String getEmailError() {
+        return emailError;
     }
 }

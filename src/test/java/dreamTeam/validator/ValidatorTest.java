@@ -1,7 +1,6 @@
 package dreamTeam.validator;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class ValidatorTest {
         strings.add("Leonardo");
         strings.add("Dicaprio");
         for (String name : strings) {
-            Assert.assertFalse(Validator.errorName(name));
+            Assert.assertFalse(Validator.nameError(name));
         }
     }
 
@@ -29,7 +28,7 @@ public class ValidatorTest {
         strings.add("7up@gmail.com");
         strings.add("must@have.ru");
         for (String email : strings) {
-            Assert.assertFalse(Validator.errorEmail(email));
+            Assert.assertFalse(Validator.emailError(email));
         }
     }
 
@@ -41,7 +40,7 @@ public class ValidatorTest {
         strings.add("25");
         strings.add("75");
         for (String age : strings) {
-            Assert.assertFalse(Validator.errorAge(age));
+            Assert.assertFalse(Validator.ageError(age));
         }
     }
 
@@ -53,7 +52,7 @@ public class ValidatorTest {
         strings.add("@dd23%");
         strings.add("&$#@!))*");
         for (String name : strings) {
-            Assert.assertTrue(Validator.errorName(name));
+            Assert.assertTrue(Validator.nameError(name));
         }
     }
 
@@ -65,7 +64,7 @@ public class ValidatorTest {
         strings.add("7upgmailcom");
         strings.add("#$@@###>##");
         for (String email : strings) {
-            Assert.assertTrue(Validator.errorEmail(email));
+            Assert.assertTrue(Validator.emailError(email));
         }
     }
 
@@ -77,7 +76,7 @@ public class ValidatorTest {
         strings.add("-12");
         strings.add("120");
         for (String age : strings) {
-            Assert.assertTrue(Validator.errorAge(age));
+            Assert.assertTrue(Validator.ageError(age));
         }
     }
 
