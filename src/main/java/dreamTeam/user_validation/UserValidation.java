@@ -1,13 +1,10 @@
 package dreamTeam.user_validation;
 
 
-import dreamTeam.GlobalException.GlobalException;
 import dreamTeam.GlobalException.IncorrectMailException;
 import dreamTeam.domain.User;
 import dreamTeam.validator.Validator;
 
-import javax.json.bind.annotation.JsonbTypeSerializer;
-import java.beans.Transient;
 import java.io.Serializable;
 
 public class UserValidation implements Serializable {

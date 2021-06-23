@@ -28,6 +28,7 @@ public class UserDAOImpl implements UserDAO {
                 .getConnection()
                 .prepareStatement(insert, Statement.RETURN_GENERATED_KEYS)) {
             int age = Integer.parseInt(user.getAge());
+            System.out.println(age);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setInt(3, age);
