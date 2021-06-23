@@ -1,34 +1,19 @@
-package dreamTeam.front_controller;
-
+package dreamTeam.service;
 
 import dreamTeam.DAO.UserDAOImpl;
 import dreamTeam.domain.User;
-import dreamTeam.service.UserServiceImpl;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
 
+public class ServletServiceImpl implements ServletService {
 
-/**
- * {ip_address:port}/rest/persons
- * Post - adding new user
- * Get - receiving a user or users
- * Delete - deleting a user
- * Put - changing a user
- */
-
-@WebServlet("/rest/persons")
-public class MainController extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req,
-                         HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject jsonObject = new JSONObject(getBody(req));
         if (!jsonObject.get("id").toString().equals("0")) {
             int id = Integer.parseInt(jsonObject.getString("id"));
@@ -41,13 +26,10 @@ public class MainController extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_OK);
                 out.print(str);
                 out.flush();
-
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
             }
         } else {
-            System.out.println("aaasass");
-
             List<User> userList = new UserServiceImpl(new UserDAOImpl()).getAllUsers();
             String str = new JSONArray(userList).toString();
             PrintWriter out = resp.getWriter();
@@ -56,13 +38,9 @@ public class MainController extends HttpServlet {
             out.print(str);
             out.flush();
         }
-
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req,
-                          HttpServletResponse resp) throws ServletException, IOException {
-
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = new User();
         JSONObject jObj = new JSONObject(getBody(req));
 
@@ -77,13 +55,9 @@ public class MainController extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.setStatus(HttpServletResponse.SC_OK);
-
-
     }
 
-    @Override
-    protected void doPut(HttpServletRequest req,
-                         HttpServletResponse resp) throws ServletException, IOException {
+    public void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = new User();
         JSONObject jObj = new JSONObject(getBody(req));
         user.setId(jObj.getString("id"));
@@ -103,13 +77,10 @@ public class MainController extends HttpServlet {
             out.flush();
         } else {
             resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-            ;
         }
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req,
-                            HttpServletResponse resp) throws ServletException, IOException {
+    public void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject jObj = new JSONObject(getBody(req));
         int id = Integer.parseInt(jObj.getString("id"));
         boolean delete = new UserServiceImpl(new UserDAOImpl()).deleteUser(id);
@@ -120,63 +91,7 @@ public class MainController extends HttpServlet {
         }
     }
 
-    //    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public List<User> getAllUsers() {
-//        return new UserServiceImpl(new UserDAOImpl()).getAllUsers();
-//    }
-//
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response addUser(User user) throws URISyntaxException {
-//        UserValidation userValidation = new UserValidation();
-//        if (userValidation.validation(user)>0){
-//            return Response.status(Response.Status.BAD_REQUEST).entity(userValidation).build();
-//        }
-//        int id = new UserServiceImpl(new UserDAOImpl()).createUser(user);
-//        user.setId(String.valueOf(id));
-//        return Response.ok(user, MediaType.APPLICATION_JSON).build();
-//    }
-//
-//    @GET
-//    @Path("{id}")
-//    public Response getUser(@PathParam("id") int id) {
-//        User user = new UserServiceImpl(new UserDAOImpl()).getUser(id);
-//        if (Integer.parseInt(user.getId()) != 0) {
-//            return Response.ok(user, MediaType.APPLICATION_JSON).build();
-//        } else {
-//            return Response.status(Response.Status.NOT_FOUND).build();
-//        }
-//    }
-//
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Path("{id}")
-//    public Response updateUser(@PathParam("id") int id, User user) {
-//        boolean updateUserField = new UserServiceImpl(new UserDAOImpl()).updateUser(user);
-//        if (updateUserField) {
-//
-//            return Response.ok(user).build();
-//        } else {
-//
-//            return Response.notModified().build();
-//        }
-//    }
-//
-//    @DELETE
-//    @Path("{id}")
-//    public Response deletePerson(@PathParam("id") int id) {
-//        boolean delete = new UserServiceImpl(new UserDAOImpl()).deleteUser(id);
-//        if (delete) {
-//            return Response.ok().build();
-//        } else {
-//            return Response.notModified().build();
-//        }
-//    }
-    public String getBody(HttpServletRequest request) {
-
-        String body = null;
+    private String getBody(HttpServletRequest request) {
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;
 
@@ -189,24 +104,22 @@ public class MainController extends HttpServlet {
                 while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
                     stringBuilder.append(charBuffer, 0, bytesRead);
                 }
-
                 return stringBuilder.toString();
             } else {
                 stringBuilder.append("");
             }
         } catch (IOException ex) {
-            // throw ex;
+            ex.printStackTrace();
             return "";
         } finally {
             if (bufferedReader != null) {
                 try {
                     bufferedReader.close();
                 } catch (IOException ex) {
-
+                    ex.printStackTrace();
                 }
             }
         }
         return null;
     }
-
 }
