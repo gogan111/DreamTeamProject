@@ -18,14 +18,18 @@ public class Receiver {
     private HttpServletResponse resp;
     private User user;
 
-    public Receiver(UserService userService, HttpServletRequest req, HttpServletResponse resp) {
-        this.userService = userService;
+    public Receiver() {
+
+    }
+
+    public Receiver(HttpServletRequest req, HttpServletResponse resp) {
+        this.userService = new UserServiceImpl(new UserDAOImpl());
         this.req = req;
         this.resp = resp;
         user = new User();
     }
 
-    public void executeGetAllUsers() throws IOException {
+    public void getAllUsers() throws IOException {
         JSONObject jsonObject = new Converter().conversionToJsonObj(req);
         if (!jsonObject.get("id").toString().equals("0")) {
             int id = Integer.parseInt(jsonObject.getString("id"));
@@ -36,7 +40,6 @@ public class Receiver {
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
             }
-
         } else {
             List<User> userList = new UserServiceImpl(new UserDAOImpl()).getAllUsers();
             String str = new JSONArray(userList).toString();

@@ -15,11 +15,9 @@ public class Converter {
     }
 
     public String getBody(HttpServletRequest request) {
-
         String body = null;
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;
-
         try {
             InputStream inputStream = request.getInputStream();
             if (inputStream != null) {
@@ -35,17 +33,17 @@ public class Converter {
                 stringBuilder.append("");
             }
         } catch (IOException ex) {
-            // throw ex;
             return "";
         } finally {
             if (bufferedReader != null) {
                 try {
                     bufferedReader.close();
                 } catch (IOException ex) {
-
+                    ex.printStackTrace();
                 }
             }
         }
+
         return null;
     }
 }
