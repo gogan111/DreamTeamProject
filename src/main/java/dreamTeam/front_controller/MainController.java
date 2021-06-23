@@ -1,13 +1,10 @@
 package dreamTeam.front_controller;
 
 
-import dreamTeam.DAO.UserDAOImpl;
 import dreamTeam.domain.Invoker;
-import dreamTeam.domain.User;
-import dreamTeam.execute.*;
-import dreamTeam.service.UserServiceImpl;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import dreamTeam.commands.*;
+import dreamTeam.service.ServletService;
+import dreamTeam.service.ServletServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.List;
 
 
 /**
@@ -32,10 +28,11 @@ public class MainController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        invoker = new Invoker(new AddUserCommand(),
-                new GetUserCommand(),
-                new UpdateUserCommand(),
-                new DeleteUserCommand());
+        ServletService servletService = new ServletServiceImpl();
+        invoker = new Invoker(new AddUserCommand(servletService),
+                new GetUserCommand(servletService),
+                new UpdateUserCommand(servletService),
+                new DeleteUserCommand(servletService));
     }
 
     @Override

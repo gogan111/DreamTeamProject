@@ -1,4 +1,4 @@
-package dreamTeam.execute;
+package dreamTeam.commands;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
