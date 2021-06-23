@@ -1,27 +1,39 @@
 <template>
     <div>Name:
-        <input type="text" v-model="user.name"
-               placeholder="Enter name">
+        <input @keyup.enter="save"
+               type="text"
+               v-model="user.name"
+               placeholder="Enter name"
+        />
         <i> {{ validator.nameError }}</i>
     </div>
     <div>Surname:
-        <input type="text" v-model="user.surname"
-               placeholder="Enter surname">
+        <input @keyup.enter="save"
+               type="text"
+               v-model="user.surname"
+               placeholder="Enter surname"
+        />
         <i> {{ validator.surnameError }}</i>
     </div>
     <div>Age:
-        <input type="number" v-model="user.age"
-               placeholder="Enter age">
+        <input @keyup.enter="save"
+               type="number"
+               v-model="user.age"
+               placeholder="Enter age"
+        />
         <i> {{ validator.ageError }}</i>
     </div>
     <div>Email:
-        <input type="email" v-model="user.email"
-               placeholder="example@email.com">
+        <input @keyup.enter="save"
+               type="email"
+               v-model="user.email"
+               placeholder="example@email.com"
+        />
         <i> {{ validator.emailError }}</i>
     </div>
 
     <div>
-        <button v-on:click="save">Save</button>
+        <button @keyup.enter="save" v-on:click="save">Save</button>
     </div>
 
     <h1>List of Users</h1>
@@ -41,7 +53,6 @@
     export default {
         name: "UserForm",
         components: {UserRow},
-
         data() {
             return {
                 validator: {
@@ -68,16 +79,11 @@
                             data.forEach(user => this.users.push(user))
                         )
                 )
+            this.sortUsers()
         },
         methods: {
             save() {
                 this.addUser(this.user)
-
-                this.user.id = ''
-                this.user.name = ''
-                this.user.surname = ''
-                this.user.age = ''
-                this.user.email = ''
             },
             updateForm(user) {
 
@@ -97,11 +103,13 @@
                         }
                     }).then(response => {
                             if (response.ok) {
-                                this.users.splice(this.users.indexOf(user), 1);
+                                this.users.splice(this.users.indexOf(user.id), 1);
                                 response.json()
                                     .then(
                                         data => this.users.push(data)
                                     )
+                                this.clearForm()
+                                this.sortUsers()
 
                             } else {
                                 alert('error')
@@ -122,8 +130,18 @@
                                     .then(
                                         data => this.users.push(data)
                                     )
+                                this.clearForm()
+                                this.sortUsers()
                             } else {
-                                alert('error')
+                                response.json()
+                                    .then(
+                                        data => {
+                                            this.validator.nameError = data.errorName
+                                            this.validator.surnameError = data.errorSurname
+                                            this.validator.ageError = data.errorAge
+                                            this.validator.emailError = data.errorEmail
+                                        }
+                                    )
                             }
                         }
                     );
@@ -139,11 +157,22 @@
                             }
                         }
                     )
+                this.clearForm()
+            },
+            clearForm() {
                 this.user.id = ''
                 this.user.name = ''
                 this.user.surname = ''
                 this.user.age = ''
                 this.user.email = ''
+
+                this.validator.nameError = ''
+                this.validator.surnameError = ''
+                this.validator.ageError = ''
+                this.validator.emailError = ''
+            },
+            sortUsers() {
+                this.users.sort((a, b) => (a.id - b.id))
             }
         }
     }
@@ -152,6 +181,6 @@
 <style scoped>
     i {
         color: #c12127;
-        font-size: large ;
+        font-size: large;
     }
 </style>

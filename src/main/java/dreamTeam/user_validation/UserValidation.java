@@ -1,13 +1,9 @@
 package dreamTeam.user_validation;
 
 
-import dreamTeam.GlobalException.GlobalException;
-import dreamTeam.GlobalException.IncorrectMailException;
 import dreamTeam.domain.User;
 import dreamTeam.validator.Validator;
 
-import javax.json.bind.annotation.JsonbTypeSerializer;
-import java.beans.Transient;
 import java.io.Serializable;
 
 public class UserValidation implements Serializable {
@@ -39,10 +35,9 @@ public class UserValidation implements Serializable {
             ++count;
         }
         if (!Validator.isEmailValid(user.getEmail())) {
-            System.out.println(Validator.isEmailValid(user.getEmail()));
             errorEmail = "Incorrect email";
             ++count;
-            throw new IncorrectMailException("Некорректный mail");
+            //throw new IncorrectMailException("Некорректный mail");
 
         }
         return count;
@@ -69,5 +64,15 @@ public class UserValidation implements Serializable {
 
     public String getErrorEmail() {
         return errorEmail;
+    }
+
+    @Override
+    public String toString() {
+        return "UserValidation{" +
+                "errorAge='" + errorAge + '\'' +
+                ", errorName='" + errorName + '\'' +
+                ", errorSurname='" + errorSurname + '\'' +
+                ", errorEmail='" + errorEmail + '\'' +
+                '}';
     }
 }

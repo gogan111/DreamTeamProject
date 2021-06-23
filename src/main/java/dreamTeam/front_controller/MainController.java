@@ -5,7 +5,6 @@ import dreamTeam.DAO.UserDAOImpl;
 import dreamTeam.domain.User;
 import dreamTeam.service.UserServiceImpl;
 import dreamTeam.user_validation.UserValidation;
-import dreamTeam.validator.Validator;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -78,8 +77,6 @@ public class MainController {
             return Response.notModified().build();
         }
     }
-
-
 
 
 }
