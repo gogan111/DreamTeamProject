@@ -1,14 +1,13 @@
 package dreamTeam.service;
 
-
 import dreamTeam.DAO.UserDAO;
-import dreamTeam.DAO.UserDAOImpl;
 import dreamTeam.domain.User;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private final UserDAO userDAO;
+
+    private UserDAO userDAO;
 
     public UserServiceImpl(UserDAO userDAO) {
         this.userDAO = userDAO;

@@ -4,6 +4,7 @@ import dreamTeam.DAO.UserDAOImpl;
 import dreamTeam.domain.User;
 import dreamTeam.service.UserService;
 import dreamTeam.service.UserServiceImpl;
+import dreamTeam.user_validation.UserValidation;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -48,13 +49,21 @@ public class Receiver {
 
     }
 
-    public void createUser() {
+    public void createUser() throws IOException {
         JSONObject jObj = new Converter().conversionToJsonObj(req);
+        UserValidation userValidation = new UserValidation();
         user.setName((String) jObj.get("name"));
         user.setSurname((String) jObj.get("surname"));
         user.setAge((String) jObj.get("age"));
         user.setEmail((String) jObj.get("email"));
-
+        if(userValidation.validation(user)) {
+            PrintWriter out = resp.getWriter();
+            resp.setContentType("application/json");
+            resp.setCharacterEncoding("UTF-8");
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.print(new JSONObject(userValidation));
+            out.flush();
+        }
         int id = new UserServiceImpl(new UserDAOImpl()).createUser(user);
 
         user.setId(String.valueOf(id));

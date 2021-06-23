@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class CreateCommand extends Command{
     @Override
-    public void execute(Receiver receiver) {
+    public void execute(Receiver receiver) throws IOException {
         receiver.createUser();
     }
 }
