@@ -35,7 +35,7 @@ public class MainController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addUser(User user) throws URISyntaxException {
         UserValidation userValidation = new UserValidation();
-        if (userValidation.validation(user)>0){
+        if (userValidation.validation(user)){
             return Response.status(Response.Status.BAD_REQUEST).entity(userValidation).build();
         }
         int id = new UserServiceImpl(new UserDAOImpl()).createUser(user);
