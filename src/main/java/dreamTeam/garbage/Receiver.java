@@ -1,4 +1,4 @@
-package dreamTeam.garbege;
+package dreamTeam.garbage;
 
 import dreamTeam.DAO.UserDAOImpl;
 import dreamTeam.domain.User;

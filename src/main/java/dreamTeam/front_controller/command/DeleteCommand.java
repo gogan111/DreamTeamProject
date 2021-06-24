@@ -1,6 +1,6 @@
 package dreamTeam.front_controller.command;
 
-import dreamTeam.garbege.Receiver;
+import dreamTeam.garbage.Receiver;
 
 public class DeleteCommand implements Command{
     @Override
