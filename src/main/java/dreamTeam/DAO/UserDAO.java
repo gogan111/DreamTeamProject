@@ -2,11 +2,10 @@ package dreamTeam.DAO;
 
 import dreamTeam.domain.User;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDAO {
-    int createUser(User user) throws SQLException;
+    int createUser(User user);
 
     User getUser(int id);
 
