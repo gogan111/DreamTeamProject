@@ -1,12 +1,14 @@
 module.exports = {
+    publicPath: process.env.NODE_ENV = '',
     devServer: {
-        port: 3000,
-        proxy: {
-            '^/rest': {
-                target: 'http://18.193.157.50:8081',
-                ws: true,
-                changeOrigin: true
-            },
+        devServer: {
+            proxy: {
+                '^/rest': {
+                    target: 'http://3.125.155.150:8081/project',
+                    ws: true,
+                    changeOrigin: true
+                },
+            }
         }
     }
 }
