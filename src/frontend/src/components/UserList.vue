@@ -1,5 +1,8 @@
 <template>
     <UserForm :users="users" :userAttr="user" :validatorAttr="validator" :saveUser="saveUser"></UserForm>
+
+    <h2>List of Heroes</h2>
+
     <UserRow v-for="user in users"
              :key="user.id"
              :user="user"
@@ -10,8 +13,8 @@
 </template>
 
 <script>
-    import UserRow from ".//UserRow";
-    import UserForm from ".//UserForm";
+    import UserRow from "./UserRow";
+    import UserForm from "./UserForm";
 
     export default {
         name: "UserList",
@@ -49,13 +52,11 @@
                     }).then(response => {
                             if (response.ok) {
                                 const index = this.users.findIndex(item => item.id === user.id)
-                                alert(index)
 
                                 response.json()
                                     .then(
                                         data => this.users.set(index, data)
                                     )
-                                this.$forceUpdate()
                                 this.cleanForm()
                                 this.sortUsers()
                             } else {
@@ -106,8 +107,9 @@
             cleanForm() {
                 this.user = {}
                 this.validator = {}
-
-                this.user = user
+            },
+            sortUsers() {
+                this.users.sort((a, b) => (a.id - b.id));
             }
         },
     }

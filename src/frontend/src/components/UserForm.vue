@@ -71,39 +71,16 @@
             },
 
             validatorAttr(newVal) {
-                this.validator.nameError = newVal.errorName
-                this.validator.surnameError = newVal.errorSurname
-                this.validator.ageError = newVal.errorAge
-                this.validator.emailError = newVal.errorEmail
+                this.validator.nameError = newVal.nameError
+                this.validator.surnameError = newVal.surnameError
+                this.validator.ageError = newVal.ageError
+                this.validator.emailError = newVal.emailError
             }
-
         },
         methods: {
             save() {
                 this.saveUser(this.user)
             },
-            updateForm(user) {
-
-                this.user.id = user.id
-                this.user.name = user.name
-                this.user.surname = user.surname
-                this.user.age = user.age
-                this.user.email = user.email
-            },
-
-            clearForm() {
-                this.user.id = ''
-                this.user.name = ''
-                this.user.surname = ''
-                this.user.age = ''
-                this.user.email = ''
-
-                this.validator.nameError = ''
-                this.validator.surnameError = ''
-                this.validator.ageError = ''
-                this.validator.emailError = ''
-            },
-
         }
     }
 </script>

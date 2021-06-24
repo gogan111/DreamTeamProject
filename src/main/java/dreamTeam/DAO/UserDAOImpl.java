@@ -107,7 +107,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public List<User> getAllUsers() {
-        String query = "SELECT id,name,surname,age,mail FROM andersen";
+        String query = "SELECT id,name,surname,age,mail FROM andersen ORDER BY id";
         try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             List<User> usersList = new ArrayList<>();

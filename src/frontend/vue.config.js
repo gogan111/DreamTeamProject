@@ -3,7 +3,7 @@ module.exports = {
         port: 3000,
         proxy: {
             '^/rest': {
-                target: 'http://localhost:9000',
+                target: 'http://18.193.157.50:8081',
                 ws: true,
                 changeOrigin: true
             },
