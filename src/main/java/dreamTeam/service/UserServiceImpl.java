@@ -3,6 +3,7 @@ package dreamTeam.service;
 import dreamTeam.DAO.UserDAO;
 import dreamTeam.domain.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -15,7 +16,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int createUser(User user) {
-        return userDAO.createUser(user);
+        try {
+            return userDAO.createUser(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override
