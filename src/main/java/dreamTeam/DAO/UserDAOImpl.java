@@ -22,7 +22,7 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     DatabaseConfig databaseConfig = new DatabaseConfig();
 
-    public int createUser(User user) throws SQLException {
+    public int createUser(User user) throws SQLException {     //TODO пересмотреть исключение в сигнатуре метода
         String insert = "INSERT INTO andersen (name, surname, age, mail) values (?, ?, ?, ?)";
         PreparedStatement preparedStatement = null;
         if (Integer.parseInt(user.getId()) != 0) {
