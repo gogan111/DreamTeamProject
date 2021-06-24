@@ -3,7 +3,7 @@ package dreamTeam.validator;
 public class Validator {
 
     public static boolean nameError(String name){
-        String reg = "^[A-Z][a-zA-z]{2,20}|[А-ЯҐЄІЇЎ][\\p{IsCyrillic}]{2,20}+$";
+        String reg = "^[A-Z][a-zA-z]{2,20}|[А-ЯҐЄІЇЎ][\\p{IsCyrillic}]{2,20}+$";   //TODO непонятные иероглифы русского регистра (???)
         return !name.matches(reg);
     }
 

@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     public int createUser(User user) {
         try {
             return userDAO.createUser(user);
-        } catch (SQLException e) {
+        } catch (SQLException e) {                      //TODO чтоооооо это тОКОЕ
             e.printStackTrace();
         }
         return 0;

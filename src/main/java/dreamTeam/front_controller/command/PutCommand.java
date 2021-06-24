@@ -4,7 +4,7 @@ import dreamTeam.garbege.Receiver;
 
 import java.io.IOException;
 
-public class PutCommand extends Command {
+public class PutCommand implements Command {
     @Override
     public void execute(Receiver receiver) throws IOException {
         receiver.updateUser();
