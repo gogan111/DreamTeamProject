@@ -1,4 +1,4 @@
-package dreamTeam.garbege;
+package dreamTeam.garbage;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
