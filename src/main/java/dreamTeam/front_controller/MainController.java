@@ -1,17 +1,17 @@
 package dreamTeam.front_controller;
 
+import dreamTeam.front_controller.command.Command;
+import dreamTeam.front_controller.command.CreateCommand;
+import dreamTeam.front_controller.command.DeleteCommand;
+import dreamTeam.front_controller.command.GetCommand;
+import dreamTeam.front_controller.command.PutCommand;
 
-import dreamTeam.domain.Invoker;
-import dreamTeam.commands.*;
-import dreamTeam.service.ServletService;
-import dreamTeam.service.ServletServiceImpl;
-
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -24,35 +24,18 @@ import java.io.*;
 
 @WebServlet("/rest/persons")
 public class MainController extends HttpServlet {
-    Invoker invoker = null;
+    private final Map<String, Command> controller = new HashMap<>();
 
     @Override
-    public void init() throws ServletException {
-        ServletService servletService = new ServletServiceImpl();
-        invoker = new Invoker(new AddUserCommand(servletService),
-                new GetUserCommand(servletService),
-                new UpdateUserCommand(servletService),
-                new DeleteUserCommand(servletService));
+    public void init() {
+        this.controller.put("get", new GetCommand());
+        this.controller.put("put", new PutCommand());
+        this.controller.put("post", new CreateCommand());
+        this.controller.put("delete", new DeleteCommand());
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        invoker.getUser(req, resp);
+    protected void service(final HttpServletRequest req, final HttpServletResponse resp) {
+        this.controller.getOrDefault(req.getMethod().toLowerCase(), receiver -> resp.setStatus(HttpServletResponse.SC_CONFLICT));
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        invoker.addUser(req, resp);
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        invoker.updateUser(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        invoker.deleteUser(req, resp);
-    }
-
 }
