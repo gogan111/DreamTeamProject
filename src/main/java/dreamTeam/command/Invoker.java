@@ -11,20 +11,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Invoker {
-    private Map<String, Command> commands;
-    private Receiver receiver;
 
-    public Invoker(HttpServletRequest req, HttpServletResponse resp) {
-        receiver = new Receiver(req, resp);
-        commands = new HashMap<>();
-        commands.put("get", new GetCommand());
-        commands.put("post", new CreateCommand());
-        commands.put("put", new PutCommand());
-        commands.put("delete", new DeleteCommand());
-    }
 
-    public void selectCommand(String command) throws IOException {
-        commands.get(command).execute(receiver);
+
+    public static void selectCommand(String command,
+                                     HttpServletRequest request,
+                                     HttpServletResponse resp) throws IOException {
+       Receiver receiver = new Receiver(request,resp);
+        switch (command) {
+            case ("get"):
+                new GetCommand().execute(receiver);
+                break;
+            case ("put"):
+                new PutCommand().execute(receiver);
+                break;
+            case ("post"):
+                new CreateCommand().execute(receiver);
+                break;
+            case ("delete"):
+                new DeleteCommand().execute(receiver);
+                break;
+        }
     }
 
 }

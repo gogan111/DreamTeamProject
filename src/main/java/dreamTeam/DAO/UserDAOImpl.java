@@ -28,7 +28,6 @@ public class UserDAOImpl implements UserDAO {
                 .getConnection()
                 .prepareStatement(insert, Statement.RETURN_GENERATED_KEYS)) {
             int age = Integer.parseInt(user.getAge());
-            System.out.println(age);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setInt(3, age);
@@ -108,7 +107,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public List<User> getAllUsers() {
-        String query = "SELECT id,name,surname,age,mail FROM andersen";
+        String query = "SELECT id,name,surname,age,mail FROM andersen ORDER BY id";
         try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             List<User> usersList = new ArrayList<>();

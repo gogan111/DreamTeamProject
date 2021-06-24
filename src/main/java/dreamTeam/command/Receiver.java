@@ -19,12 +19,8 @@ public class Receiver {
     private HttpServletResponse resp;
     private User user;
 
-    public Receiver() {
-
-    }
-
     public Receiver(HttpServletRequest req, HttpServletResponse resp) {
-        this.userService = new UserServiceImpl(new UserDAOImpl());
+        userService = new UserServiceImpl(new UserDAOImpl());
         this.req = req;
         this.resp = resp;
         user = new User();

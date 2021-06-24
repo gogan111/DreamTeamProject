@@ -24,25 +24,21 @@ public class MainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req,
                          HttpServletResponse resp) throws ServletException, IOException {
-        Invoker invoker = new Invoker(req, resp);
-        invoker.selectCommand("get");
+        Invoker.selectCommand("get", req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Invoker invoker = new Invoker(req, resp);
-        invoker.selectCommand("post");
+        Invoker.selectCommand("post", req, resp);
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Invoker invoker = new Invoker(req, resp);
-        invoker.selectCommand("put");
+        Invoker.selectCommand("put", req, resp);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Invoker invoker = new Invoker(req, resp);
-        invoker.selectCommand("delete");
+        Invoker.selectCommand("delete", req, resp);
     }
 }
