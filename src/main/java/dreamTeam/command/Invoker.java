@@ -32,6 +32,7 @@ public class Invoker {
                 new DeleteCommand().execute(receiver);
                 break;
         }
+
     }
 
 }

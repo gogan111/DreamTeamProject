@@ -8,7 +8,6 @@
     import UserList from "./components/UserList";
     export default {
         components: {UserList},
-
     }
 
 </script>
