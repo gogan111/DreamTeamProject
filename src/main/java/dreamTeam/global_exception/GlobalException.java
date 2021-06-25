@@ -1,4 +1,4 @@
-package dreamTeam.GlobalException;
+package dreamTeam.global_exception;
 
 //import javax.ws.rs.core.MediaType;
 //import javax.ws.rs.core.Response;

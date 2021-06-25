@@ -1,4 +1,4 @@
-package dreamTeam.GlobalException;
+package dreamTeam.global_exception;
 
 public class IncorrectMailException extends RuntimeException {
 

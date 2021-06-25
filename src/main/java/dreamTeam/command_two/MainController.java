@@ -1,14 +1,23 @@
-package dreamTeam.front_controller;
+package dreamTeam.command_two;
 
 
-import dreamTeam.command.*;
+import dreamTeam.command.Command;
+import dreamTeam.command.DeleteCommand;
+import dreamTeam.command.GetCommand;
+import dreamTeam.command.PostCommand;
+import dreamTeam.command.PutCommand;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 
 /**
@@ -22,7 +31,20 @@ import java.io.IOException;
 @WebServlet("/rest/persons")
 public class MainController extends HttpServlet {
     Command command;
+    Connection connection;
 
+    public void init(ServletConfig config){
+        try{
+            ServletContext context = config.getServletContext();
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(
+                    context.getInitParameter("dbUrl"),
+                    context.getInitParameter("dbUser"),
+                    context.getInitParameter("dbPassword") );
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     protected void doGet(HttpServletRequest req,
                          HttpServletResponse resp) throws ServletException, IOException {
@@ -47,5 +69,13 @@ public class MainController extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.command = new DeleteCommand();
         command.execute(req, resp, this.connection);
+    }
+
+    public void destroy() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

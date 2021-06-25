@@ -1,6 +1,7 @@
-package dreamTeam.command;
+package dreamTeam.command_two;
 
 import org.json.JSONObject;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,8 +1,22 @@
 package dreamTeam.command;
 
-public class DeleteCommand extends Command{
+import dreamTeam.DAO.UserDAO;
+import dreamTeam.service.UserService;
+import org.json.JSONObject;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.Connection;
+
+public class DeleteCommand implements Command{
     @Override
-    public void execute(Receiver receiver) {
-        receiver.deleteUser();
+    public void execute(HttpServletRequest req, HttpServletResponse resp, Connection connection){
+        JSONObject jObj = new Converter().conversionToJsonObj(req);
+        int id = Integer.parseInt(jObj.getString("id"));
+        if (new UserService(new UserDAO()).deleteUser(id)) {
+            resp.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+        }
     }
 }
