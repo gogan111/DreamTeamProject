@@ -1,4 +1,4 @@
-package dreamTeam.config;
+package dreamteam.config;
 
 
 import org.junit.jupiter.api.Assertions;

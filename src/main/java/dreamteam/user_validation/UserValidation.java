@@ -1,8 +1,7 @@
-package dreamTeam.user_validation;
+package dreamteam.user_validation;
 
-
-import dreamTeam.domain.User;
-import dreamTeam.validator.Validator;
+import dreamteam.dto.User;
+import dreamteam.validator.Validator;
 
 import java.io.Serializable;
 
@@ -17,7 +16,7 @@ public class UserValidation implements Serializable {
     public boolean validation(User user) {
         error = false;
 
-        if (Validator.ageError(user.getAge())) {
+        if (Validator.ageError(String.valueOf(user.getAge()))) {
             ageError = "age is not valid";
             error = true;
         }

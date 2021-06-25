@@ -1,4 +1,4 @@
-package dreamTeam.validator;
+package dreamteam.validator;
 
 public class Validator {
 

@@ -1,15 +1,16 @@
-package dreamTeam.dao;
+package dreamteam.dao;
 
-import dreamTeam.config.DatabaseConfig;
-import dreamTeam.domain.User;
 
+import dreamteam.config.DatabaseConfig;
+import dreamteam.dto.User;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 
 /*
  * Table - andersen
@@ -18,34 +19,31 @@ import java.util.List;
  * password - 1234
  */
 
+@ApplicationScoped
+public class UserDAO {
+    @Inject
+    DatabaseConfig databaseConfig;
 
-public class UserDAOImpl implements UserDAO {
-    DatabaseConfig databaseConfig = new DatabaseConfig();
-
-    public int createUser(User user) {
+    public int saveUser(User user) {
         String insert = "INSERT INTO andersen (name, surname, age, mail) values (?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = databaseConfig
-                .getConnection()
+        try (PreparedStatement preparedStatement = databaseConfig.getConnection()
                 .prepareStatement(insert, Statement.RETURN_GENERATED_KEYS)) {
-            int age = Integer.parseInt(user.getAge());
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
-            preparedStatement.setInt(3, age);
+            preparedStatement.setInt(3, user.getAge());
             preparedStatement.setString(4, user.getEmail());
-            if (preparedStatement.executeUpdate()!=0) {
-                try(ResultSet resultSet = preparedStatement.getGeneratedKeys()){
-                    while (resultSet.next()){
-                        int id = resultSet.getInt("id");
-                        return id;
-                    }
-                }catch (SQLException e){
-                    System.err.println("Problems created");
+            preparedStatement.executeUpdate();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                while (resultSet.next()) {
+                    return resultSet.getInt("id");
                 }
+            } catch (SQLException e) {
+                System.err.println("Could not receive id of a user");
+                throw new SQLException();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Could not create the user");
         }
-
         return 0;
     }
 
@@ -56,10 +54,10 @@ public class UserDAOImpl implements UserDAO {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    user.setId(String.valueOf(resultSet.getInt(1)));
+                    user.setId(resultSet.getInt(1));
                     user.setName(resultSet.getString(2));
                     user.setSurname(resultSet.getString(3));
-                    user.setAge(String.valueOf(resultSet.getInt(4)));
+                    user.setAge(resultSet.getInt(4));
                     user.setEmail(resultSet.getString(5));
                 }
             }
@@ -70,63 +68,62 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    public boolean updateUser(User user) {
+    public int updateUser(User user) {
         String updateUsr = "UPDATE andersen SET (name, surname, age, mail) = (?, ?, ?, ?) WHERE id = ?";
-
-        try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(updateUsr)) {
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getSurname());
-            statement.setInt(3, Integer.parseInt(user.getAge()));
-            statement.setInt(5, Integer.parseInt(user.getId()));
-            statement.setString(4, user.getEmail());
-            statement.executeUpdate();
-
-            return true;
+        try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(updateUsr)) {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getSurname());
+            preparedStatement.setInt(3, user.getAge());
+            preparedStatement.setInt(5, user.getId());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.executeUpdate();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                while (resultSet.next()) {
+                    return resultSet.getInt("id");
+                }
+            } catch (SQLException e) {
+                System.err.println("Could not to update user");
+            }
         } catch (SQLException e) {
-            System.err.println("Update user problems");
+            System.err.println("Could not find a user");
             e.printStackTrace();
         }
-
-        return false;
+        return 0;
     }
 
     public boolean deleteUser(int userId) {
         String delete = "DELETE FROM andersen WHERE id = ?";
-
         try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(delete)) {
             statement.setInt(1, userId);
             statement.execute();
-
             return true;
         } catch (SQLException e) {
-            System.err.println("Create delete problems");
+            System.err.println("Could not find a user");
             e.printStackTrace();
         }
-
         return false;
     }
 
     public List<User> getAllUsers() {
-        String query = "SELECT id,name,surname,age,mail FROM andersen";
-        try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
+        String query = "SELECT id,name,surname,age,mail FROM andersen ORDER BY id";
+        try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             List<User> usersList = new ArrayList<>();
+            User user = new User();
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(String.valueOf(resultSet.getInt(1)));
+                user.setId(resultSet.getInt(1));
                 user.setName(resultSet.getString(2));
                 user.setSurname(resultSet.getString(3));
-                user.setAge(String.valueOf(resultSet.getInt(4)));
+                user.setAge(resultSet.getInt(4));
                 user.setEmail(resultSet.getString(5));
                 usersList.add(user);
             }
-
             return usersList;
         } catch (SQLException e) {
-            System.err.println("Get all user problems");
+            System.err.println("Could not get the list of the users");
             e.printStackTrace();
         }
-
         return null;
     }
 }
+
