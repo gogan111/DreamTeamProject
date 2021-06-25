@@ -2,9 +2,9 @@ package dreamteam.command;
 
 import dreamteam.dto.User;
 import dreamteam.service.UserService;
-import dreamteam.user_validation.UserValidation;
 import org.json.JSONObject;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @Named("save")
+@RequestScoped
 public class Save implements Command {
     @Inject
     User user;
@@ -21,17 +22,19 @@ public class Save implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        JSONObject jObj = new JSONObject(req);
-        UserValidation userValidation = new UserValidation();
+        JSONObject jObj = new JSONObject(GetBody.getBody(req));
         user.setName(jObj.getString("name"));
         user.setSurname(jObj.getString("surname"));
         user.setAge(jObj.getInt("age"));
         user.setEmail(jObj.getString("email"));
+        System.out.println(user);
         int id = userService.saveUser(user);
         user.setId(id);
+        String json = new JSONObject(user).toString();
         PrintWriter out = resp.getWriter();
-        out.print(new JSONObject(userValidation));
+        out.print(json);
         out.flush();
         resp.setStatus(HttpServletResponse.SC_OK);
+
     }
 }

@@ -10,13 +10,11 @@
     <packaging>war</packaging>
     <name>project</name>
 
-<<<<<<< HEAD
-=======
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
->>>>>>> vladanew
+
     <build>
         <finalName>project</finalName>
         <plugins>
@@ -30,84 +28,10 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-<<<<<<< HEAD
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>Copy Vue frontend into Spring Boot target static folder</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-
-                            <outputDirectory>target/project</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/frontend/dist</directory>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.7.6</version>
-
-                <executions>
-                    <execution>
-                        <id>Install node and npm</id>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <nodeVersion>v15.5.1</nodeVersion>
-                            <npmVersion>7.4.0</npmVersion>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>npm install</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>npm build</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <arguments>run build</arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <nodeVersion>v15.5.1</nodeVersion>
-                    <workingDirectory>src/frontend</workingDirectory>
-                </configuration>
-
-            </plugin>
-=======
->>>>>>> vladanew
         </plugins>
     </build>
 
     <dependencies>
-<<<<<<< HEAD
         <!-- https://mvnrepository.com/artifact/javax.enterprise/cdi-api -->
         <dependency>
             <groupId>javax.enterprise</groupId>
@@ -116,41 +40,38 @@
             <scope>provided</scope>
         </dependency>
 
-
-=======
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20190722</version>
         </dependency>
-        <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-            <version>2.0.SP1</version>
-        </dependency>
+
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet-shaded</artifactId>
             <version>3.1.2.Final</version>
         </dependency>
->>>>>>> vladanew
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.19</version>
         </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>3.11.1</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

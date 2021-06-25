@@ -5,23 +5,26 @@ import dreamteam.dao.UserDAO;
 import dreamteam.dto.User;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.util.List;
 
 
-@ApplicationScoped
+
 public class UserService {
     @Inject
     private UserDAO userDAO;
 
     public int saveUser(User user) {
         if (user.getId() != 0) {
-            return updateUser(user);
+            if (updateUser(user)) {
+                return user.getId();
+            }
         }
         return userDAO.saveUser(user);
     }
 
-    public int updateUser(User user) {
+    public boolean updateUser(User user) {
         return userDAO.updateUser(user);
     }
 
