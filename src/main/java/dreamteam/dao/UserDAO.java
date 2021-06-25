@@ -3,6 +3,7 @@ package dreamteam.dao;
 
 import dreamteam.config.DatabaseConfig;
 import dreamteam.dto.User;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.sql.PreparedStatement;
@@ -22,10 +23,12 @@ import java.util.List;
 @ApplicationScoped
 public class UserDAO {
     @Inject
-    DatabaseConfig databaseConfig;
+    private DatabaseConfig databaseConfig;
+    @Inject
+    private User user;
 
     public int saveUser(User user) {
-        String insert = "INSERT INTO andersen (name, surname, age, mail) values (?, ?, ?, ?)";
+        String insert = "INSERT INTO andersen (name, surname, age, email) values (?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = databaseConfig.getConnection()
                 .prepareStatement(insert, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, user.getName());
@@ -34,55 +37,32 @@ public class UserDAO {
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.executeUpdate();
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                while (resultSet.next()) {
-                    return resultSet.getInt("id");
-                }
+                resultSet.next();
+                return resultSet.getInt("id");
             } catch (SQLException e) {
-                System.err.println("Could not receive id of a user");
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            System.err.println("Could not create the user");
-        }
-        return 0;
-    }
-
-    public User getUser(int id) {
-        String setUserId = "SELECT id,name,surname,age,mail FROM andersen WHERE id = ?";
-        User user = new User();
-        try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(setUserId)) {
-            statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    user.setId(resultSet.getInt(1));
-                    user.setName(resultSet.getString(2));
-                    user.setSurname(resultSet.getString(3));
-                    user.setAge(resultSet.getInt(4));
-                    user.setEmail(resultSet.getString(5));
-                }
+                throw new SQLException("Could not receive id of a user");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return user;
+        return 0;
     }
 
     public int updateUser(User user) {
-        String updateUsr = "UPDATE andersen SET (name, surname, age, mail) = (?, ?, ?, ?) WHERE id = ?";
+        String updateUsr = "UPDATE andersen SET (name, surname, age, email) = (?, ?, ?, ?) WHERE email = ?";
         try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(updateUsr)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setInt(3, user.getAge());
-            preparedStatement.setInt(5, user.getId());
             preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getEmail());
             preparedStatement.executeUpdate();
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                while (resultSet.next()) {
-                    return resultSet.getInt("id");
-                }
+                resultSet.next();
+                return resultSet.getInt("id");
+
             } catch (SQLException e) {
-                System.err.println("Could not to update user");
+                throw new SQLException("Could not to update user");
             }
         } catch (SQLException e) {
             System.err.println("Could not find a user");
@@ -91,11 +71,16 @@ public class UserDAO {
         return 0;
     }
 
-    public boolean deleteUser(int userId) {
-        String delete = "DELETE FROM andersen WHERE id = ?";
-        try (PreparedStatement statement = databaseConfig.getConnection().prepareStatement(delete)) {
-            statement.setInt(1, userId);
-            statement.execute();
+    /*
+     * Пользователь удаляется по email
+     * statement.setString (номер аттрибута в таблице, название аттрибута)
+     */
+
+    public boolean deleteUser(String email) {
+        String delete = "DELETE FROM andersen WHERE email = ?";
+        try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(delete)) {
+            preparedStatement.setString(1, "email");
+            preparedStatement.execute();
             return true;
         } catch (SQLException e) {
             System.err.println("Could not find a user");
@@ -105,11 +90,10 @@ public class UserDAO {
     }
 
     public List<User> getAllUsers() {
-        String query = "SELECT id,name,surname,age,mail FROM andersen ORDER BY id";
+        String query = "SELECT id,name,surname,age,email FROM andersen ORDER BY email";
         try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             List<User> usersList = new ArrayList<>();
-            User user = new User();
             while (resultSet.next()) {
                 user.setId(resultSet.getInt(1));
                 user.setName(resultSet.getString(2));

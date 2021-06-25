@@ -1,11 +1,7 @@
-package dreamteam.front_controller;
+package dreamteam.frontcontroller;
 
 
 import dreamteam.command.Command;
-import dreamteam.command.Save;
-import dreamteam.command.Delete;
-import dreamteam.command.Read;
-import dreamteam.command.Update;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,25 +22,24 @@ import java.util.Map;
  */
 
 @WebServlet("/rest/persons")
-public class MainController extends HttpServlet {
+public class FrontController extends HttpServlet {
     Map<String, Command> controller;
-    @Inject @Named("saveUser")
-    Command saveUser;
-    @Inject @Named("readUsers")
-    Command readUser;
-    @Inject @Named("deleteUser")
-    Command deleteUser;
-    @Inject @Named("updateUser")
-    Command updateUser;
-    
-    
+    @Inject @Named("save")
+    Command save;
+    @Inject @Named("read")
+    Command read;
+    @Inject @Named("delete")
+    Command delete;
+    @Inject @Named("update")
+    Command update;
+
     @Override
     public void init() {
         controller = new HashMap<>();
-        this.controller.put("getUsers", readUser);
-        this.controller.put("saveUser", saveUser);
-        this.controller.put("deleteUser", deleteUser);
-        this.controller.put("updateUser", updateUser);
+        this.controller.put("getUsers", read);
+        this.controller.put("saveUser", save);
+        this.controller.put("deleteUser", delete);
+        this.controller.put("updateUser", update);
     }
 
     @Override

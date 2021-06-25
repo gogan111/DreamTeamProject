@@ -8,7 +8,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Named("deleteUser")
+@Named("delete")
 public class Delete implements Command {
     @Inject
     UserService userService;
@@ -16,8 +16,8 @@ public class Delete implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
         JSONObject jObj = new JSONObject(req);
-        int id = Integer.parseInt(jObj.getString("id"));
-        if (userService.deleteUser(id)) {
+        String email= jObj.getString("email");
+        if (userService.deleteUser(email)) {
             resp.setStatus(HttpServletResponse.SC_OK);
         } else {
             resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);

@@ -3,6 +3,7 @@ package dreamteam.service;
 
 import dreamteam.dao.UserDAO;
 import dreamteam.dto.User;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
@@ -20,16 +21,12 @@ public class UserService {
         return userDAO.saveUser(user);
     }
 
-    public User getUser(int id) {
-        return userDAO.getUser(id);
-    }
-
     public int updateUser(User user) {
         return userDAO.updateUser(user);
     }
 
-    public boolean deleteUser(int id) {
-        return userDAO.deleteUser(id);
+    public boolean deleteUser(String email) {
+        return userDAO.deleteUser(email);
     }
 
     public List<User> getAllUsers() {

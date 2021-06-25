@@ -1,8 +1,5 @@
 package dreamteam.dto;
 
-import javax.enterprise.context.RequestScoped;
-
-@RequestScoped
 public class User {
     private int id;
     private String name;
