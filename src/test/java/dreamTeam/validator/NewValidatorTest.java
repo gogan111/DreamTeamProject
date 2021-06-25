@@ -7,8 +7,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.time.LocalDate;
-
 public class NewValidatorTest {
     private final UserValidator validator = new UserValidator();
     private User user;

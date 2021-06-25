@@ -1,19 +1,10 @@
 package dreamTeam.validator;
 
-public class Validator {
+import dreamTeam.domain.User;
+import dreamTeam.global_exception.IncorrectDataException;
 
-    public static boolean nameError(String name){
-        String reg = "^[A-Z][a-zA-z]{2,20}|[А-ЯҐЄІЇЎ][\\p{IsCyrillic}]{2,20}+$";   //TODO непонятные иероглифы русского регистра (???)
-        return !name.matches(reg);
-    }
+public interface Validator {
 
-    public static boolean emailError(String email){
-        String reg = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
-        return !email.matches(reg);
-    }
+    void validate(User user) throws IncorrectDataException;
 
-    public static boolean ageError(String age){
-        String reg = "^[1-9][0-9]?$";
-        return !age.matches(reg);
-    }
 }
