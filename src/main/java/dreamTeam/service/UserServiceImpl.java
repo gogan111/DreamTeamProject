@@ -1,8 +1,7 @@
 package dreamTeam.service;
 
 
-import dreamTeam.DAO.UserDAO;
-import dreamTeam.DAO.UserDAOImpl;
+import dreamTeam.dao.UserDAO;
 import dreamTeam.domain.User;
 
 import java.util.List;

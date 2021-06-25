@@ -1,7 +1,7 @@
 package dreamTeam.front_controller;
 
 
-import dreamTeam.DAO.UserDAOImpl;
+import dreamTeam.dao.UserDAOImpl;
 import dreamTeam.domain.User;
 import dreamTeam.service.UserServiceImpl;
 import dreamTeam.user_validation.UserValidation;

@@ -1,4 +1,4 @@
-package dreamTeam.DAO;
+package dreamTeam.dao;
 
 import dreamTeam.config.DatabaseConfig;
 import dreamTeam.domain.User;
