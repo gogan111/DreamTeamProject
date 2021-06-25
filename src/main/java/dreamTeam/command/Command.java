@@ -7,5 +7,5 @@ import java.sql.Connection;
 
 public interface Command {
 
-     void execute(HttpServletRequest req, HttpServletResponse resp, Connection connection) throws IOException;
+     void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException;
 }

@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 
-public class PostCommand implements Command {
+public class Create implements Command {
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp, Connection connection) throws IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         User user = new User();
         JSONObject jObj = new Converter().conversionToJsonObj(req);
         UserValidation userValidation = new UserValidation();

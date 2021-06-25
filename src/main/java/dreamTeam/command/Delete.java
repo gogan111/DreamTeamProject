@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
 
-public class DeleteCommand implements Command{
+public class Delete implements Command{
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp, Connection connection){
+    public void execute(HttpServletRequest req, HttpServletResponse resp){
         JSONObject jObj = new Converter().conversionToJsonObj(req);
         int id = Integer.parseInt(jObj.getString("id"));
         if (new UserService(new UserDAO()).deleteUser(id)) {

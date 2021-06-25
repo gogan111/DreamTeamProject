@@ -35,8 +35,7 @@ public class UserDAO{
             if (preparedStatement.executeUpdate()!=0) {
                 try(ResultSet resultSet = preparedStatement.getGeneratedKeys()){
                     while (resultSet.next()){
-                        int id = resultSet.getInt("id");
-                        return id;
+                        return resultSet.getInt("id");
                     }
                 }catch (SQLException e){
                     System.err.println("Could not create the user");

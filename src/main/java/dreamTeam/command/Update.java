@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-public class PutCommand implements Command {
+public class Update implements Command {
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp, Connection connection) throws IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         User user = new User();
         JSONObject jObj = new Converter().conversionToJsonObj(req);
         user.setId(jObj.getString("id"));

@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-public class GetCommand implements Command {
+public class Read implements Command {
     @Override
-    public void  execute(HttpServletRequest req, HttpServletResponse resp, Connection connection) throws IOException {
+    public void  execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         User user;
         JSONObject jsonObject = new Converter().conversionToJsonObj(req);
         if (!jsonObject.get("id").toString().equals("0")) {

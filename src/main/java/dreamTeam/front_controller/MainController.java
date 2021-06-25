@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -21,31 +23,36 @@ import java.io.IOException;
 
 @WebServlet("/rest/persons")
 public class MainController extends HttpServlet {
-    Command command;
+    Map<String, Command> controller = new HashMap<>();
+
+    @Override
+    public void init() {
+        this.controller.put("get", new Read());
+        this.controller.put("post", new Create());
+        this.controller.put("delete", new Delete());
+        this.controller.put("put", new Update());
+    }
+
 
     @Override
     protected void doGet(HttpServletRequest req,
-                         HttpServletResponse resp) throws ServletException, IOException {
-
-        this.command = new GetCommand();
-        this.command.execute(req, resp, this.connection);
+                         HttpServletResponse resp) throws IOException {
+        this.controller.get("get").execute(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.command = new PostCommand();
-        this.command.execute(req, resp, this.connection);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        this.controller.get("post").execute(req, resp);
+
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.command = new PutCommand();
-        this.command.execute(req, resp, this.connection);
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        this.controller.get("put").execute(req, resp);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.command = new DeleteCommand();
-        command.execute(req, resp, this.connection);
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        this.controller.get("delete").execute(req, resp);
     }
 }
