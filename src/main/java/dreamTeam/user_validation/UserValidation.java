@@ -1,7 +1,7 @@
 package dreamTeam.user_validation;
 
 import dreamTeam.domain.User;
-import dreamTeam.validator.Validator;
+import dreamTeam.validator.Validatorr;
 
 import java.io.Serializable;
 
@@ -16,19 +16,19 @@ public class UserValidation implements Serializable {
     public boolean validation(User user) {
         error = false;
 
-        if (Validator.ageError(user.getAge())) {
+        if (Validatorr.ageError(user.getAge())) {
             ageError = "age is not valid";
             error = true;
         }
-        if (Validator.nameError(user.getName())) {
+        if (Validatorr.nameError(user.getName())) {
             nameError = "name is not valid";
             error = true;
         }
-        if (Validator.nameError(user.getSurname())) {
+        if (Validatorr.nameError(user.getSurname())) {
             surnameError = "surname is not valid";
             error = true;
         }
-        if (Validator.emailError(user.getEmail())) {
+        if (Validatorr.emailError(user.getEmail())) {
             emailError = "email is not valid";
             error = true;
         }

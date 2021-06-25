@@ -1,18 +1,16 @@
 package dreamTeam.validator;
-
 import dreamTeam.domain.User;
 import dreamTeam.global_exception.IncorrectDataException;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class NewValidatorTest {
     private final UserValidator validator = new UserValidator();
     private User user;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -28,38 +26,71 @@ public class NewValidatorTest {
         validator.validate(user);
     }
 
-    @Test
+    @Test(expected = IncorrectDataException.class)
     public void testUserFieldsValidationFailsWithIncorrectEmail() throws IncorrectDataException {
-        thrown.expect(IncorrectDataException.class);
-        user.setEmail("somemail.koljollok");
-        thrown.expectMessage("Something wrong with your email " + user.getEmail());
-        validator.validate(user);
+
+        List<String> listOfIncorrectEmails = new ArrayList<String>();
+        listOfIncorrectEmails.add("plainaddress");
+        listOfIncorrectEmails.add("#@%^%#$@#$@#.com");
+        listOfIncorrectEmails.add("@example.com");
+        listOfIncorrectEmails.add("Joe Smith <email@example.com>");
+        listOfIncorrectEmails.add("email.example.com");
+        listOfIncorrectEmails.add("email@example@example.com");
+        listOfIncorrectEmails.add("email.@example.com");
+        listOfIncorrectEmails.add("email..email@example.com");
+        listOfIncorrectEmails.add("email@-example.com");
+        listOfIncorrectEmails.add("Abc..123@example.com");
+        listOfIncorrectEmails.add("email@111.222.333.44444");
+        listOfIncorrectEmails.add("email@example.com (Joe Smith)");
+        listOfIncorrectEmails.add("email@example..com");
+
+        for(String s : listOfIncorrectEmails){
+            user.setEmail("somemail.koljollok");
+            validator.validate(user);
+        }
+
     }
 
 
-    @Test
+    @Test(expected = IncorrectDataException.class)
     public void testUserFieldsValidationFailsWithIncorrectName() throws IncorrectDataException {
-        thrown.expect(IncorrectDataException.class);
-        user.setName("koli12koli");
-        thrown.expectMessage("Something wrong with your name " + user.getName());
-        validator.validate(user);
+        List<String> listOfIncorrectNameSurname = new ArrayList<String>();
+        listOfIncorrectNameSurname.add("12Nikol21ai");
+        listOfIncorrectNameSurname.add("_Vlad23imir");
+        listOfIncorrectNameSurname.add(" ");
+        listOfIncorrectNameSurname.add("1To_ny2");
+        listOfIncorrectNameSurname.add("Sm_it_h");
+        listOfIncorrectNameSurname.add("Ivanov__");
+        listOfIncorrectNameSurname.add("Petrov12");
+
+        for(String s : listOfIncorrectNameSurname){
+            user.setName(s);
+            validator.validate(user);
+        }
+
     }
 
 
-
-    @Test
+    @Test(expected = IncorrectDataException.class)
     public void testUserFieldsValidationFailsWithIncorrectLastName() throws IncorrectDataException {
-        thrown.expect(IncorrectDataException.class);
-        user.setSurname("123");
-        thrown.expectMessage("Something wrong with your surname " + user.getSurname());
-        validator.validate(user);
+        List<String> listOfIncorrectNameSurname = new ArrayList<String>();
+        listOfIncorrectNameSurname.add("12Nikol21ai");
+        listOfIncorrectNameSurname.add("_Vlad23imir");
+        listOfIncorrectNameSurname.add(" ");
+        listOfIncorrectNameSurname.add("1To_ny2");
+        listOfIncorrectNameSurname.add("Sm_it_h");
+        listOfIncorrectNameSurname.add("Ivanov__");
+        listOfIncorrectNameSurname.add("Petrov12");
+
+        for(String s : listOfIncorrectNameSurname){
+            user.setSurname(s);
+            validator.validate(user);
+        }
     }
 
-    @Test
+    @Test(expected = IncorrectDataException.class)
     public void testUserFieldsValidationFailsWithEmptyLastName() throws IncorrectDataException {
-        thrown.expect(IncorrectDataException.class);
         user.setSurname("");
-        thrown.expectMessage("You should fill all fields");
         validator.validate(user);
     }
 
