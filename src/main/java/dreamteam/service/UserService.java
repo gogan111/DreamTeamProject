@@ -4,11 +4,8 @@ package dreamteam.service;
 import dreamteam.dao.UserDAO;
 import dreamteam.dto.User;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.util.List;
-
 
 
 public class UserService {

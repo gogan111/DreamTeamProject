@@ -23,6 +23,7 @@ public class Save implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JSONObject jObj = new JSONObject(GetBody.getBody(req));
+        user.setId(jObj.getInt("id"));
         user.setName(jObj.getString("name"));
         user.setSurname(jObj.getString("surname"));
         user.setAge(jObj.getInt("age"));

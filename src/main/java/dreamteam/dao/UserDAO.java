@@ -26,7 +26,7 @@ public class UserDAO {
     private User user;
 
     public int saveUser(User user) {
-        String insert = "INSERT INTO andersen (name, surname, age, email) values (?, ?, ?, ?)";
+        String insert = "INSERT INTO users (name, surname, age, email) values (?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = databaseConfig.getConnection()
                 .prepareStatement(insert, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, user.getName());
@@ -48,14 +48,13 @@ public class UserDAO {
     }
 
     public boolean updateUser(User user) {
-        String updateUsr = "UPDATE andersen SET (name, surname, age, email,id) = (?, ?, ?, ?,?) WHERE email = ?";
+        String updateUsr = "UPDATE users SET (name, surname, age, email) = (?, ?, ?, ?) WHERE email = ?";
         try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(updateUsr)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setInt(3, user.getAge());
             preparedStatement.setString(4, user.getEmail());
-            preparedStatement.setInt(5, user.getId());
-            preparedStatement.setString(6, user.getEmail());
+            preparedStatement.setString(5, user.getEmail());
             preparedStatement.executeUpdate();
             return true;
 
@@ -72,7 +71,7 @@ public class UserDAO {
      */
 
     public boolean deleteUser(String email) {
-        String delete = "DELETE FROM andersen WHERE email = ?";
+        String delete = "DELETE FROM users WHERE email = ?";
         try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(delete)) {
             preparedStatement.setString(1, email);
             preparedStatement.execute();
@@ -85,7 +84,7 @@ public class UserDAO {
     }
 
     public List<User> getAllUsers() {
-        String query = "SELECT * FROM andersen ORDER BY email";
+        String query = "SELECT * FROM users ORDER BY email";
         try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             List<User> usersList = new ArrayList<>();
