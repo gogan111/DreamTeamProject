@@ -46,7 +46,7 @@ public class UserDAO {
         }
         return 0;
     }
-
+// изменит обновление по id
     public boolean updateUser(User user) {
         String updateUsr = "UPDATE users SET (name, surname, age, email) = (?, ?, ?, ?) WHERE email = ?";
         try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(updateUsr)) {

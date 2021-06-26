@@ -1,7 +1,9 @@
 package dreamteam.command;
 
 import dreamteam.dto.User;
+import dreamteam.global_exception.IncorrectDataException;
 import dreamteam.service.UserService;
+import dreamteam.validator.EmailValidator;
 import org.json.JSONObject;
 
 import javax.enterprise.context.RequestScoped;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Objects;
 
 @Named("save")
 @RequestScoped
@@ -19,23 +22,41 @@ public class Save implements Command {
     User user;
     @Inject
     UserService userService;
+    @Inject
+    EmailValidator validator;
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+<<<<<<< HEAD
         JSONObject jObj = new JSONObject(GetBody.getBody(req));
         user.setId(jObj.getInt("id"));
+=======
+        JSONObject jObj = new JSONObject(Objects.requireNonNull(GetBody.getBody(req)));
+>>>>>>> aa28335a076e35c490e2cc6771513b6b4f4e5292
         user.setName(jObj.getString("name"));
         user.setSurname(jObj.getString("surname"));
         user.setAge(jObj.getInt("age"));
         user.setEmail(jObj.getString("email"));
-        System.out.println(user);
-        int id = userService.saveUser(user);
-        user.setId(id);
-        String json = new JSONObject(user).toString();
         PrintWriter out = resp.getWriter();
-        out.print(json);
-        out.flush();
-        resp.setStatus(HttpServletResponse.SC_OK);
-
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        try {
+            validator.validate(user);
+        } catch (IncorrectDataException e) {
+            out = resp.getWriter();
+            resp.setContentType("application/json");
+            resp.setCharacterEncoding("UTF-8");
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            JSONObject jsonObject = new JSONObject(e.getMessage());
+            out.print(jsonObject);
+            out.flush();
+        }
+       int id = userService.saveUser(user);
+            user.setId(id);
+           out.print(new JSONObject(user));
+           out.flush();
+           resp.setStatus(HttpServletResponse.SC_OK);
     }
+
 }
+
