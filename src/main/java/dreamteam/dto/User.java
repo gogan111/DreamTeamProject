@@ -1,6 +1,9 @@
 package dreamteam.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.json.JSONPropertyName;
 
+@JsonPropertyOrder({"id","name","surname","age","email"})
 public class User {
     private int id;
     private String name;

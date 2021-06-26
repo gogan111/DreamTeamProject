@@ -22,15 +22,15 @@ public class Read implements Command {
     @Override
     public void  execute(HttpServletRequest req, HttpServletResponse resp)  {
         List<User> userList = userService.getAllUsers();
-        PrintWriter out = null;
+
         try {
-            out = resp.getWriter();
+
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
             resp.setStatus(HttpServletResponse.SC_OK);
-            out.println(new JSONArray(userList));
-            out.flush();
+            resp.getWriter().write(new JSONArray(userList).toString());
+
         } catch (IOException e) {
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         }
