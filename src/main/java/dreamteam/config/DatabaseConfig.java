@@ -8,8 +8,8 @@ public class DatabaseConfig {
 
     // TODO: change this fields next time
     //change DB_URL database userdb->alex
-    private final String DB_URL = "jdbc:postgresql://localhost:5432/userdb";
-    private final String USER = "dreamteam";
+    private final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/userdb";
+    private final String USER = "postgres";
     private final String PASS = "admin";
 //     private final String DB_URL = "jdbc:postgresql://localhost:5432/alex";
 //     private final String USER = "alex";
