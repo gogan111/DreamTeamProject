@@ -1,5 +1,6 @@
 package dreamteam.command;
 
+import dreamteam.coverter.ConvertToJson;
 import dreamteam.dto.User;
 import dreamteam.service.UserService;
 import org.json.JSONObject;
@@ -21,21 +22,22 @@ public class Update implements Command {
     private User user;
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        JSONObject jObj = new JSONObject(GetBody.getBody(req));
+    public void execute(HttpServletRequest req, HttpServletResponse resp) {
+        JSONObject jObj = new JSONObject(ConvertToJson.convertBody(req));
         user.setId(jObj.getInt("id"));
         user.setName(jObj.getString("name"));
         user.setSurname(jObj.getString("surname"));
         user.setAge(jObj.getInt("age"));
         user.setEmail(jObj.getString("email"));
-        boolean updateUserField = userService.updateUser(user);
-        if (updateUserField) {
-            PrintWriter out = resp.getWriter();
+        PrintWriter out = null;
+        try {
+            out = resp.getWriter();
+            userService.updateUser(user);
             String str = new JSONObject(user).toString();
             resp.setStatus(HttpServletResponse.SC_OK);
             out.print(str);
             out.flush();
-        } else {
+        } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
         }
     }

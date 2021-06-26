@@ -1,10 +1,11 @@
-package dreamteam.command;
+package dreamteam.coverter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 
-public class GetBody {
-    public static String getBody(HttpServletRequest request) {
+public class ConvertToJson {
+
+    public static String convertBody(HttpServletRequest request) {
         StringBuilder jb = new StringBuilder();
         String line = null;
         try {
@@ -13,8 +14,9 @@ public class GetBody {
                 jb.append(line);
             }
             return jb.toString();
-        } catch (Exception e) { /*report an error*/ }
-
-    return null;
+        } catch (Exception e) {
+            System.err.println("Error receive body from json " + e.getMessage());
+        }
+        return null;
     }
 }

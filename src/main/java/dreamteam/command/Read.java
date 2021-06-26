@@ -20,12 +20,20 @@ public class Read implements Command {
     UserService userService;
 
     @Override
-    public void  execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void  execute(HttpServletRequest req, HttpServletResponse resp)  {
         List<User> userList = userService.getAllUsers();
-        String arrayUser = new JSONArray(userList).toString();
-        PrintWriter out = resp.getWriter();
-        resp.setStatus(HttpServletResponse.SC_OK);
-        out.print(arrayUser);
-        out.flush();
+        PrintWriter out = null;
+        try {
+            out = resp.getWriter();
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            resp.setCharacterEncoding("UTF-8");
+            resp.setStatus(HttpServletResponse.SC_OK);
+            out.println(new JSONArray(userList));
+            out.flush();
+        } catch (IOException e) {
+            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        }
+
     }
 }
