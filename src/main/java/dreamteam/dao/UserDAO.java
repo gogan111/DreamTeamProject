@@ -84,7 +84,7 @@ public class UserDAO {
     }
 
     public List<User> getAllUsers() {
-        String query = "SELECT * FROM users ORDER BY email";
+        String query = "SELECT id, name, surname, age, email FROM users ORDER BY email";
         try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             List<User> usersList = new ArrayList<>();
