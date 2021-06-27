@@ -1,6 +1,6 @@
 package dreamteam.command;
 
-import dreamteam.coverter.ConvertToJson;
+import dreamteam.coverter.ConvertJsonToString;
 import dreamteam.dto.User;
 import dreamteam.global_exception.IncorrectDataException;
 import dreamteam.service.UserService;
@@ -13,8 +13,6 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Objects;
 
 @Named("save")
 @RequestScoped
@@ -38,7 +36,7 @@ public class Save implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
-        JSONObject jObj = new JSONObject(ConvertToJson.convertBody(req));
+        JSONObject jObj = (JSONObject) new JSONObject(ConvertJsonToString.convertBody(req)).get("user");
         this.user.setName(jObj.getString("name"));
         this.user.setSurname(jObj.getString("surname"));
         this.user.setAge(jObj.getInt("age"));

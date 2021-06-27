@@ -1,7 +1,8 @@
 package dreamteam.command;
 
-import dreamteam.coverter.ConvertToJson;
+import dreamteam.coverter.ConvertJsonToString;
 import dreamteam.service.UserService;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.enterprise.context.RequestScoped;
@@ -24,7 +25,7 @@ public class Delete implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
-        JSONObject jObj = new JSONObject(ConvertToJson.convertBody(req));
+        JSONObject jObj = (JSONObject) new JSONObject(ConvertJsonToString.convertBody(req)).get("user");
         String email = jObj.getString("email");
         if (userService.deleteUser(email)) {
             resp.setStatus(HttpServletResponse.SC_OK);

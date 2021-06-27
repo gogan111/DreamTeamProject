@@ -18,17 +18,18 @@ public class SaveTest {
     private Save save;
     @Mock
     private UserService userService;
+    @Mock
     private String resp;
-    private static String req;
+    private  String json;
 
     @BeforeAll
-    private void init() {
-        req ="{id:0, name:\"aaa\", surname:\"bbb\", age:33, email:\"aaaaaa@mai.ru\"}";
+    public void init() {
+        json ="{id:0, name:\"aaa\", surname:\"bbb\", age:33, email:\"aaaaaa@mai.ru\"}";
     }
 
 
     @Test
     public void executeSaveTest() {
-
+//        Mockito.when(userService.saveUser());
     }
 }

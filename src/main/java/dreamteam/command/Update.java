@@ -1,6 +1,6 @@
 package dreamteam.command;
 
-import dreamteam.coverter.ConvertToJson;
+import dreamteam.coverter.ConvertJsonToString;
 import dreamteam.dto.User;
 import dreamteam.service.UserService;
 import org.json.JSONObject;
@@ -10,8 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 @Named("update")
 @RequestScoped
@@ -33,7 +31,7 @@ public class Update implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
-        JSONObject jObj = new JSONObject(ConvertToJson.convertBody(req));
+        JSONObject jObj = (JSONObject) new JSONObject(ConvertJsonToString.convertBody(req)).get("user");
         this.user.setId(jObj.getInt("id"));
         this.user.setName(jObj.getString("name"));
         this.user.setSurname(jObj.getString("surname"));
