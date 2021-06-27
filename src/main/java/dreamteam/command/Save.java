@@ -13,6 +13,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Named("save")
 @RequestScoped
@@ -34,24 +35,19 @@ public class Save implements Command {
         this.user.setEmail(jObj.getString("email"));
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
+        PrintWriter out = null;
         try {
+            out = resp.getWriter();
             this.validator.validate(user);
             int id = userService.saveUser(user);
-            System.out.println(id);
-            if (id == 0) {
-                throw new IncorrectDataException("Email already exists");
-            }
+            if (id==0){throw new IncorrectDataException("email already exists "+user.getEmail());}
             this.user.setId(id);
             resp.setStatus(HttpServletResponse.SC_OK);
-            resp.getWriter().write(new JSONObject(user).toString());
+            out.print(new JSONObject(user));
         } catch (IOException | IncorrectDataException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             String errorValidation = e.getMessage();
-            try {
-                resp.getWriter().write("{" + "error" + ": " + errorValidation + " }");
-            } catch (IOException exc) {
-                exc.printStackTrace();
-            }
+            out.write("{" + "error" + ": " + errorValidation + " }");
         }
     }
 

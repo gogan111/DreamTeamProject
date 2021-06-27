@@ -3,6 +3,7 @@ package dreamteam.service;
 
 import dreamteam.dao.UserDAO;
 import dreamteam.dto.User;
+import dreamteam.exception.IncorrectDataException;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -15,7 +16,6 @@ public class UserService {
     public int saveUser(User user) {
         if (user.getId() != 0) {
             if (updateUser(user)) {
-
                 return user.getId();
             }
         }
@@ -23,6 +23,10 @@ public class UserService {
     }
 
     public boolean updateUser(User user) {
+        if (!userDAO.updateUser(user)) {
+            System.out.println("sdsdsds");
+            throw new IncorrectDataException("");
+        }
         return userDAO.updateUser(user);
     }
 
