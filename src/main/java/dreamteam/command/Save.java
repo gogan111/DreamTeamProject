@@ -1,10 +1,10 @@
 package dreamteam.command;
 
-import dreamteam.coverter.ConvertToJson;
+import dreamteam.coverter.ConvertJsonToString;
 import dreamteam.dto.User;
-import dreamteam.global_exception.IncorrectDataException;
+import dreamteam.exception.IncorrectDataException;
 import dreamteam.service.UserService;
-import dreamteam.validator.EmailValidator;
+import dreamteam.validator.EmptyFieldsValidator;
 import org.json.JSONObject;
 
 import javax.enterprise.context.RequestScoped;
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Objects;
 
 @Named("save")
 @RequestScoped
@@ -24,21 +23,11 @@ public class Save implements Command {
     @Inject
     UserService userService;
     @Inject
-    EmailValidator validator;
-
-    /*
-     * пример json: {
-     * "surname": "Zateevvv",
-     * "name": "Andrey",
-     * "id":0,
-     * "email": "ss@gmail.com",
-     * "age": 44
-     * }
-     */
+    EmptyFieldsValidator validator;
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
-        JSONObject jObj = new JSONObject(ConvertToJson.convertBody(req));
+        JSONObject jObj = (JSONObject) new JSONObject(ConvertJsonToString.convertBody(req)).get("user");
         this.user.setName(jObj.getString("name"));
         this.user.setSurname(jObj.getString("surname"));
         this.user.setAge(jObj.getInt("age"));
@@ -46,21 +35,19 @@ public class Save implements Command {
         this.user.setEmail(jObj.getString("email"));
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
+        PrintWriter out = null;
         try {
+            out = resp.getWriter();
             this.validator.validate(user);
             int id = userService.saveUser(user);
+            if (id==0){throw new IncorrectDataException("email already exists "+user.getEmail());}
             this.user.setId(id);
             resp.setStatus(HttpServletResponse.SC_OK);
-            resp.getWriter().write(new JSONObject(user).toString());
+            out.print(new JSONObject(user));
         } catch (IOException | IncorrectDataException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             String errorValidation = e.getMessage();
-            String json = new JSONObject(errorValidation).toString();
-            try {
-                resp.getWriter().write(json);
-            } catch (IOException exc) {
-                exc.printStackTrace();
-            }
+            out.write("{" + "error" + ": " + errorValidation + " }");
         }
     }
 

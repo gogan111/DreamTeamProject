@@ -3,7 +3,7 @@ package dreamteam.coverter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 
-public class ConvertToJson {
+public class ConvertJsonToString {
 
     public static String convertBody(HttpServletRequest request) {
         StringBuilder jb = new StringBuilder();

@@ -1,9 +1,8 @@
 package dreamteam.command;
 
-import dreamteam.coverter.ConvertToJson;
+import dreamteam.coverter.ConvertJsonToString;
 import dreamteam.service.UserService;
 import org.json.JSONObject;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,17 +15,11 @@ public class Delete implements Command {
     @Inject
     UserService userService;
 
-    /*
-     * пример json: {
-     * "email": "ss@gmail.com"
-     * }
-     */
-
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
-        JSONObject jObj = new JSONObject(ConvertToJson.convertBody(req));
+        JSONObject jObj = (JSONObject) new JSONObject(ConvertJsonToString.convertBody(req)).get("user");
         String email = jObj.getString("email");
-        if (userService.deleteUser(email)) {
+        if (this.userService.deleteUser(email)) {
             resp.setStatus(HttpServletResponse.SC_OK);
         } else {
             resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);

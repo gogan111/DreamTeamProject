@@ -10,9 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.inject.Inject;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,24 +42,24 @@ public class TestUserService {
     }
 
     @Test
-    public void getAllPersonTest() throws SQLException {
+    public void getAllPersonTest() {
         Mockito.when(userDAO.getAllUsers()).thenReturn(userList);
         int a = userService.getAllUsers().size();
         Assertions.assertEquals(2, a);
     }
 
     @Test
-    public void updateUserTest() throws SQLException {
+    public void updateUserTest() {
         Mockito.when(userDAO.updateUser(user)).thenReturn(true);
         boolean trueUpdate = userService.updateUser(user);
         Assertions.assertTrue(trueUpdate);
     }
 
-//    @Test
-//    public void deleteUserTest() throws SQLException {
-//        Mockito.when(userDAO.deleteUser(1)).thenReturn(true);
-//        boolean deleteUser = userService.deleteUser(1);
-//        Assertions.assertTrue(deleteUser);
-//    }
+    @Test
+    public void deleteUserTest() {
+        Mockito.when(userDAO.deleteUser("asdas@mail.com")).thenReturn(true);
+        boolean deleteUser = userService.deleteUser("asdas@mail.com");
+        Assertions.assertTrue(deleteUser);
+    }
 
 }
