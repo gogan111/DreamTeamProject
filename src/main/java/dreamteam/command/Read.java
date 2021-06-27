@@ -26,7 +26,7 @@ public class Read implements Command {
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
             resp.setStatus(HttpServletResponse.SC_OK);
-            resp.getWriter().write(new JSONArray(userList).toString());
+            resp.getWriter().print(new JSONArray(userList));
         } catch (IOException e) {
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         }
