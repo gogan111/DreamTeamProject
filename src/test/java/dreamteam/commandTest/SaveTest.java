@@ -2,6 +2,7 @@ package dreamteam.commandTest;
 
 import dreamteam.command.Save;
 import dreamteam.service.UserService;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,13 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 
 public class SaveTest {
     @InjectMocks
-    Save save;
+    private Save save;
     @Mock
-    UserService userService;
-    String resp;
-    String req;
+    private UserService userService;
+    private String resp;
+    private static String req;
 
-    @BeforeEach
+    @BeforeAll
     private void init() {
         req ="{id:0, name:\"aaa\", surname:\"bbb\", age:33, email:\"aaaaaa@mai.ru\"}";
     }
