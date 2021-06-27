@@ -1,7 +1,7 @@
 package dreamteam.validator;
 
 import dreamteam.dto.User;
-import dreamteam.global_exception.IncorrectDataException;
+import dreamteam.exception.IncorrectDataException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;

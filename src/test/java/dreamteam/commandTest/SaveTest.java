@@ -27,7 +27,6 @@ public class SaveTest {
         json ="{id:0, name:\"aaa\", surname:\"bbb\", age:33, email:\"aaaaaa@mai.ru\"}";
     }
 
-
     @Test
     public void executeSaveTest() {
 //        Mockito.when(userService.saveUser());
