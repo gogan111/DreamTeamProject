@@ -19,16 +19,6 @@ public class Update implements Command {
     @Inject
     private User user;
 
-    /*
-     * пример json: {
-     * "surname": "Zateevvv",
-     * "name": "Andrey",
-     * "id":1,
-     * "email": "ss@gmail.com",
-     * "age": 44
-     * }
-     */
-
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
         JSONObject jObj = (JSONObject) new JSONObject(ConvertJsonToString.convertBody(req)).get("user");
