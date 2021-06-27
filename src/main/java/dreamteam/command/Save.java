@@ -47,15 +47,18 @@ public class Save implements Command {
         try {
             this.validator.validate(user);
             int id = userService.saveUser(user);
+            System.out.println(id);
+            if (id == 0) {
+                throw new IncorrectDataException("Email already exists");
+            }
             this.user.setId(id);
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.getWriter().write(new JSONObject(user).toString());
         } catch (IOException | IncorrectDataException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             String errorValidation = e.getMessage();
-            String json = new JSONObject(errorValidation).toString();
             try {
-                resp.getWriter().write(json);
+                resp.getWriter().write("{" + "error" + ": " + errorValidation + " }");
             } catch (IOException exc) {
                 exc.printStackTrace();
             }

@@ -3,6 +3,8 @@ package dreamteam.dao;
 
 import dreamteam.config.DatabaseConfig;
 import dreamteam.dto.User;
+import org.postgresql.util.PSQLException;
+
 import javax.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
