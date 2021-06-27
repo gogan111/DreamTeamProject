@@ -30,28 +30,28 @@ public class Save implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
         JSONObject jObj = new JSONObject(ConvertToJson.convertBody(req));
 //        орпеделиться что будут присылать при создании? "",0, null
-        if (jObj.getString("id") == null) {
-            user.setId(0);
-        }
         user.setName(jObj.getString("name"));
         user.setSurname(jObj.getString("surname"));
         user.setAge(jObj.getInt("age"));
         user.setEmail(jObj.getString("email"));
-        PrintWriter out = null;
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
         try {
-            out = resp.getWriter();
             validator.validate(user);
             int id = userService.saveUser(user);
             user.setId(id);
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.getWriter().write(new JSONObject(user).toString());
-            out.flush();
+
         } catch (IOException | IncorrectDataException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             String errorValidation = e.getMessage();
-            jObj = new JSONObject(errorValidation);
-            out.print(jObj);
-            out.flush();
+            String json = new JSONObject(errorValidation).toString();
+            try {
+                resp.getWriter().write(json);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
     }
 

@@ -29,14 +29,14 @@ public class Update implements Command {
         user.setSurname(jObj.getString("surname"));
         user.setAge(jObj.getInt("age"));
         user.setEmail(jObj.getString("email"));
-
+        PrintWriter out = null;
         try {
-
+            out = resp.getWriter();
             userService.updateUser(user);
             String str = new JSONObject(user).toString();
             resp.setStatus(HttpServletResponse.SC_OK);
-            resp.getWriter().write(str);
-
+            out.print(str); resp.getWriter().write(str);
+            out.flush();
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
         }
