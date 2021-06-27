@@ -5,6 +5,7 @@ import dreamteam.dto.User;
 import dreamteam.global_exception.IncorrectDataException;
 import dreamteam.service.UserService;
 import dreamteam.validator.EmailValidator;
+import dreamteam.validator.EmptyFieldsValidator;
 import org.json.JSONObject;
 
 import javax.enterprise.context.RequestScoped;
@@ -22,7 +23,7 @@ public class Save implements Command {
     @Inject
     UserService userService;
     @Inject
-    EmailValidator validator;
+    EmptyFieldsValidator validator;
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
