@@ -26,31 +26,40 @@ public class Save implements Command {
     @Inject
     EmailValidator validator;
 
+    /*
+     * пример json: {
+     * "surname": "Zateevvv",
+     * "name": "Andrey",
+     * "id":0,
+     * "email": "ss@gmail.com",
+     * "age": 44
+     * }
+     */
+
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
         JSONObject jObj = new JSONObject(ConvertToJson.convertBody(req));
-//        орпеделиться что будут присылать при создании? "",0, null
-        user.setName(jObj.getString("name"));
-        user.setSurname(jObj.getString("surname"));
-        user.setAge(jObj.getInt("age"));
-        user.setEmail(jObj.getString("email"));
+        this.user.setName(jObj.getString("name"));
+        this.user.setSurname(jObj.getString("surname"));
+        this.user.setAge(jObj.getInt("age"));
+        this.user.setId(jObj.getInt("id"));
+        this.user.setEmail(jObj.getString("email"));
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         try {
-            validator.validate(user);
+            this.validator.validate(user);
             int id = userService.saveUser(user);
-            user.setId(id);
+            this.user.setId(id);
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.getWriter().write(new JSONObject(user).toString());
-
         } catch (IOException | IncorrectDataException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             String errorValidation = e.getMessage();
             String json = new JSONObject(errorValidation).toString();
             try {
                 resp.getWriter().write(json);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+            } catch (IOException exc) {
+                exc.printStackTrace();
             }
         }
     }

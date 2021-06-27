@@ -13,6 +13,7 @@ public class UserService {
     private UserDAO userDAO;
 
     public int saveUser(User user) {
+        System.out.println(user.getId());
         if (user.getId() != 0) {
             if (updateUser(user)) {
                 return user.getId();

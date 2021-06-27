@@ -1,4 +1,4 @@
-package dreamteam.frontcontroller;
+package dreamteam.controller;
 
 
 import dreamteam.command.Command;
@@ -22,7 +22,7 @@ import java.util.Map;
  */
 
 @WebServlet("/rest/persons")
-public class FrontController extends HttpServlet {
+public class MainController extends HttpServlet {
     Map<String, Command> controller;
     @Inject @Named("save")
     Command save;

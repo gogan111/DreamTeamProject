@@ -16,10 +16,16 @@ public class Delete implements Command {
     @Inject
     UserService userService;
 
+    /*
+     * пример json: {
+     * "email": "ss@gmail.com"
+     * }
+     */
+
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
         JSONObject jObj = new JSONObject(ConvertToJson.convertBody(req));
-        String email= jObj.getString("email");
+        String email = jObj.getString("email");
         if (userService.deleteUser(email)) {
             resp.setStatus(HttpServletResponse.SC_OK);
         } else {

@@ -21,22 +21,29 @@ public class Update implements Command {
     @Inject
     private User user;
 
+    /*
+     * пример json: {
+     * "surname": "Zateevvv",
+     * "name": "Andrey",
+     * "id":1,
+     * "email": "ss@gmail.com",
+     * "age": 44
+     * }
+     */
+
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
         JSONObject jObj = new JSONObject(ConvertToJson.convertBody(req));
-        user.setId(jObj.getInt("id"));
-        user.setName(jObj.getString("name"));
-        user.setSurname(jObj.getString("surname"));
-        user.setAge(jObj.getInt("age"));
-        user.setEmail(jObj.getString("email"));
-        PrintWriter out = null;
+        this.user.setId(jObj.getInt("id"));
+        this.user.setName(jObj.getString("name"));
+        this.user.setSurname(jObj.getString("surname"));
+        this.user.setAge(jObj.getInt("age"));
+        this.user.setEmail(jObj.getString("email"));
         try {
-            out = resp.getWriter();
-            userService.updateUser(user);
+            this.userService.updateUser(user);
             String str = new JSONObject(user).toString();
             resp.setStatus(HttpServletResponse.SC_OK);
-            out.print(str); resp.getWriter().write(str);
-            out.flush();
+            resp.getWriter().write(str);
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
         }
