@@ -1,5 +1,6 @@
 package dreamteam.command;
 
+import dreamteam.constants.Constants;
 import dreamteam.dto.User;
 import dreamteam.service.UserService;
 import org.json.JSONArray;
@@ -21,8 +22,8 @@ public class Read implements Command {
     public void  execute(HttpServletRequest req, HttpServletResponse resp)  {
         List<User> userList = userService.getAllUsers();
         try {
-            resp.setContentType("application/json");
-            resp.setCharacterEncoding("UTF-8");
+            resp.setContentType(Constants.CONTENT_TYPE);
+            resp.setCharacterEncoding(Constants.CHARACTER_ENCODING);
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.getWriter().print(new JSONArray(userList));
         } catch (IOException e) {

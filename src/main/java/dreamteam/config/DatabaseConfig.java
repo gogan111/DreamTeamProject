@@ -6,9 +6,12 @@ import java.sql.SQLException;
 
 public class DatabaseConfig {
 
-    private final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/userdb";
-    private final String USER = "postgres";
-    private final String PASS = "12061996";
+//    private final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/userdb";
+//    private final String USER = "postgres";
+//    private final String PASS = "12061996";
+    private final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/alex";
+    private final String USER = "alex";
+    private final String PASS = "1234";
     Connection connection;
 
     public Connection getConnection() {

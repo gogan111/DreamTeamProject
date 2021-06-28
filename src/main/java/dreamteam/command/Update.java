@@ -1,5 +1,6 @@
 package dreamteam.command;
 
+import dreamteam.constants.Constants;
 import dreamteam.coverter.ConvertJsonToString;
 import dreamteam.dto.User;
 import dreamteam.service.UserService;
@@ -20,12 +21,12 @@ public class Update implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
-        JSONObject jObj = (JSONObject) new JSONObject(ConvertJsonToString.convertBody(req)).get("user");
-        this.user.setId(jObj.getInt("id"));
-        this.user.setName(jObj.getString("name"));
-        this.user.setSurname(jObj.getString("surname"));
-        this.user.setAge(jObj.getInt("age"));
-        this.user.setEmail(jObj.getString("email"));
+        JSONObject jObj = (JSONObject) new JSONObject(ConvertJsonToString.convertBody(req)).get(Constants.USER);
+        this.user.setId(jObj.getInt(Constants.ID));
+        this.user.setName(jObj.getString(Constants.NAME));
+        this.user.setSurname(jObj.getString(Constants.SURNAME));
+        this.user.setAge(jObj.getInt(Constants.AGE));
+        this.user.setEmail(jObj.getString(Constants.EMAIL));
         try {
             this.userService.updateUser(user);
             String str = new JSONObject(user).toString();

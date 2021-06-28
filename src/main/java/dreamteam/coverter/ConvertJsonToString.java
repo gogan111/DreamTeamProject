@@ -1,8 +1,11 @@
 package dreamteam.coverter;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 
+@NotNull
 public class ConvertJsonToString {
 
     public static String convertBody(HttpServletRequest request) {

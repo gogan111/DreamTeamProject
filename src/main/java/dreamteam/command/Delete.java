@@ -1,6 +1,8 @@
 package dreamteam.command;
 
+import dreamteam.constants.Constants;
 import dreamteam.coverter.ConvertJsonToString;
+import dreamteam.exception.IncorrectDataException;
 import dreamteam.service.UserService;
 import org.json.JSONObject;
 import javax.enterprise.context.RequestScoped;
@@ -17,11 +19,15 @@ public class Delete implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
-        JSONObject jObj = (JSONObject) new JSONObject(ConvertJsonToString.convertBody(req)).get("user");
-        String email = jObj.getString("email");
-        if (this.userService.deleteUser(email)) {
+        String bodyRequires = ConvertJsonToString.convertBody(req);
+        try {
+            JSONObject jObj = (JSONObject) new JSONObject(bodyRequires).get(Constants.USER);
+            String email = jObj.getString(Constants.EMAIL);
+            if(!this.userService.deleteUser(email)) {
+                throw new IncorrectDataException("Incorrect delete");
+            }
             resp.setStatus(HttpServletResponse.SC_OK);
-        } else {
+        } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
         }
     }
