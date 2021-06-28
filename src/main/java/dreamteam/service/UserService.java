@@ -23,10 +23,6 @@ public class UserService {
     }
 
     public boolean updateUser(User user) {
-        if (!userDAO.updateUser(user)) {
-            System.out.println("sdsdsds");
-            throw new IncorrectDataException("");
-        }
         return userDAO.updateUser(user);
     }
 
