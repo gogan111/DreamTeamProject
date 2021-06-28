@@ -4,7 +4,6 @@ import dreamteam.coverter.ConvertJsonToString;
 import dreamteam.dto.User;
 import dreamteam.service.UserService;
 import org.json.JSONObject;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -1,8 +1,6 @@
 package dreamteam.controller;
 
-
 import dreamteam.command.Command;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.annotation.WebServlet;
@@ -12,14 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-/**
- * {ip_address:port}/rest/persons
- * Post - adding new user
- * Get - receiving a user or users
- * Delete - deleting a user
- * Put - changing a user
- */
 
 @WebServlet("/rest/persons")
 public class MainController extends HttpServlet {

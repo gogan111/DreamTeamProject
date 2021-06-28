@@ -6,7 +6,6 @@ import dreamteam.exception.IncorrectDataException;
 import dreamteam.service.UserService;
 import dreamteam.validator.EmptyFieldsValidator;
 import org.json.JSONObject;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
