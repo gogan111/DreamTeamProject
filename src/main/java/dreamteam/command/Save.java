@@ -47,6 +47,7 @@ public class Save implements Command {
             this.user.setId(id);
             resp.setStatus(HttpServletResponse.SC_OK);
             out.print(new JSONObject(user));
+            out.flush();
         } catch (IOException | IncorrectDataException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             String errorValidation = e.getMessage();
