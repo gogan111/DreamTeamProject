@@ -1,20 +1,22 @@
 package dreamteam.service;
+
+
 import dreamteam.dao.UserDAO;
 import dreamteam.dto.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import dreamteam.exception.IncorrectDataException;
+
+import javax.inject.Inject;
 import java.util.List;
 
-@Service
-public class UserService {
 
-    @Autowired
+public class UserService {
+    @Inject
     private UserDAO userDAO;
 
-    public User saveUser(User user) {
+    public int saveUser(User user) {
         if (user.getId() != 0) {
             if (updateUser(user)) {
-                return user;
+                return user.getId();
             }
         }
         return userDAO.saveUser(user);
@@ -24,8 +26,8 @@ public class UserService {
         return userDAO.updateUser(user);
     }
 
-    public boolean deleteUser(Integer id) {
-        return userDAO.deleteUser(id);
+    public boolean deleteUser(String email) {
+        return userDAO.deleteUser(email);
     }
 
     public List<User> getAllUsers() {

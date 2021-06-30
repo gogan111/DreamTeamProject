@@ -1,91 +1,98 @@
 package dreamteam.dao;
+
+
+import dreamteam.config.DatabaseConfig;
 import dreamteam.dto.User;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.springframework.stereotype.Repository;
+import javax.inject.Inject;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-
 public class UserDAO {
+    @Inject
+    private DatabaseConfig databaseConfig;
 
-
-    private static SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-
-
-    public UserDAO() {
-    }
-
-    Session session = sessionFactory.openSession();
-    Transaction transaction = null;
-
-    public List<User> getAllUsers(){
-        List<User> users = session.createQuery("FROM User", User.class).getResultList();
-        session.close();
-        return users;
-    }
-
-    public User saveUser(User user)  {
-
-        try {
-            transaction = session.beginTransaction();
-            session.save(user);
-            session.getTransaction().commit();
-            session.close();
-        }
-        catch (HibernateException e){
-            if (transaction !=null) {
-                transaction.rollback();
+    public int saveUser(User user) {
+        String insert = "INSERT INTO users (name, surname, age, email) values (?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = databaseConfig.getConnection()
+                .prepareStatement(insert, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getSurname());
+            preparedStatement.setInt(3, user.getAge());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.executeUpdate();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                while (resultSet.next()) {
+                    return resultSet.getInt("id");
+                }
+            } catch (SQLException e) {
+                throw new SQLException("Could not receive id of a user "+e.getMessage());
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-         finally {
-            session.close();
-        }
-        return user;
+        return 0;
     }
 
-    public boolean updateUser(User user)  {
-
-        try {
-            transaction = session.beginTransaction();
-            session.update(user);
-            session.getTransaction().commit();
-            session.close();
-
-        }catch (HibernateException e){
-            if (transaction !=null) {
-                transaction.rollback();
-            }
-        }
-        finally {
-            session.close();
+    public boolean updateUser(User user) {
+        String updateUsr = "UPDATE users SET (name, surname, age, email) = (?, ?, ?, ?) WHERE id = ?";
+        try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(updateUsr)) {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getSurname());
+            preparedStatement.setInt(3, user.getAge());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setInt(5, user.getId());
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Could not find a user");
+            e.printStackTrace();
         }
         return false;
     }
 
-    public boolean deleteUser(Integer id)  {
+    /*
+     * Пользователь удаляется по email
+     * statement.setString (номер аттрибута в таблице, название аттрибута)
+     */
 
-        try {
-            transaction = session.beginTransaction();
-            User user = session.load(User.class, id);
-            session.delete(user);
-            session.getTransaction().commit();
-            session.close();
-
-        }catch (HibernateException e){
-            if (transaction !=null) {
-                transaction.rollback();
-            }
-        }
-        finally {
-            session.close();
+    public boolean deleteUser(String email) {
+        String delete = "DELETE FROM users WHERE email = ?";
+        try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(delete)) {
+            preparedStatement.setString(1, email);
+            preparedStatement.execute();
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Could not find a user");
+            e.printStackTrace();
         }
         return false;
     }
 
-
+    public List<User> getAllUsers() {
+        String query = "SELECT id, name, surname, age, email FROM users ORDER BY email";
+        try (PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            User user;
+            List<User> usersList = new ArrayList<>();
+            while (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getInt(1));
+                user.setName(resultSet.getString(2));
+                user.setSurname(resultSet.getString(3));
+                user.setAge(resultSet.getInt(4));
+                user.setEmail(resultSet.getString(5));
+                usersList.add(user);
+            }
+            return usersList;
+        } catch (SQLException e) {
+            System.err.println("Could not get the list of the users");
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 
