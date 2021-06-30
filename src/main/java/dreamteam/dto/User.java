@@ -1,7 +1,5 @@
 package dreamteam.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Column;
@@ -21,12 +19,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name")
-    @NotEmpty
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "surname", nullable = false)
-    @NotEmpty
     private String surname;
 
     @Column(name = "age", nullable = false)
@@ -34,7 +30,6 @@ public class User {
     private int age;
 
     @Column(name = "email", nullable = false)
-    @Email
     private String email;
 
     public User() {
