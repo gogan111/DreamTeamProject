@@ -1,10 +1,25 @@
 package dreamteam.dto;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 public class User {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
     private String surname;
+
+    @Column(name = "age")
     private int age;
+
+    @Column(name = "email")
     private String email;
 
     public User() {
