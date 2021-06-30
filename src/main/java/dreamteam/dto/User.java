@@ -1,5 +1,16 @@
 package dreamteam.dto;
-import javax.persistence.*;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
@@ -11,15 +22,19 @@ public class User {
     private int id;
 
     @Column(name = "name")
+    @NotEmpty
     private String name;
 
-    @Column(name = "surname")
+    @Column(name = "surname", nullable = false)
+    @NotEmpty
     private String surname;
 
-    @Column(name = "age")
+    @Column(name = "age", nullable = false)
+    @Range(min = 1, max = 99)
     private int age;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
+    @Email
     private String email;
 
     public User() {
