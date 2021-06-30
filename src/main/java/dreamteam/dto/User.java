@@ -1,10 +1,30 @@
 package dreamteam.dto;
 
+
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 public class User {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
     private String name;
-    private String surname;
+
+    @Column(name = "surname", nullable = false)
+        private String surname;
+
+    @Column(name = "age", nullable = false)
+    @Range(min = 1, max = 99)
     private int age;
+
+    @Column(name = "email", nullable = false)
     private String email;
 
     public User() {
