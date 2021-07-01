@@ -1,12 +1,13 @@
 package dreamteam.dto;
 
-
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User {
 
     @Id
@@ -18,7 +19,7 @@ public class User {
     private String name;
 
     @Column(name = "surname", nullable = false)
-        private String surname;
+    private String surname;
 
     @Column(name = "age", nullable = false)
     @Range(min = 1, max = 99)
@@ -31,6 +32,14 @@ public class User {
     }
 
     public User(int id, String name, String surname, int age, String email) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.email = email;
+    }
+
+    public User(String name, String surname, int age, String email) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -76,5 +85,16 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

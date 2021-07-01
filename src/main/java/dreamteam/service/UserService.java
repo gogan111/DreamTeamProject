@@ -1,4 +1,5 @@
 package dreamteam.service;
+
 import dreamteam.dao.UserDAO;
 import dreamteam.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +13,7 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
-
-
     public User saveUser(User user) {
-        if (user.getId() != 0) {
-            if (updateUser(user)) {
-                return user;
-            }
-        }
         return userDAO.saveUser(user);
     }
 
@@ -34,4 +28,6 @@ public class UserService {
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }
+
+
 }
