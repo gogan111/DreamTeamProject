@@ -6,17 +6,17 @@
 
     <session-factory>
         <property name="hibernate.dialect">
-            org.hibernate.dialect.MySQL5Dialect
+            org.hibernate.dialect.PostgreSQLDialect
         </property>
         <property name="hibernate.connection.driver_class">
-            com.mysql.jdbc.Driver
+            org.postgresql.Driver
         </property>
 
 
         <!-- Assume ИМЯ ВАШЕЙ БД is the database name -->
 
         <property name="hibernate.connection.url">
-            jdbc:mysql://localhost:3306/user_db
+            jdbc:postgresql://172.17.0.1:5432/user_db
         </property>
         <property name="hibernate.connection.username">
             bestuser
