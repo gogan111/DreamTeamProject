@@ -13,13 +13,8 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
-    public User saveUser(User user) {
 
-        if (user.getId() != 0) {
-            if (updateUser(user)) {
-                return user;
-            }
-        }
+    public User saveUser(User user) {
 
         return userDAO.saveUser(user);
     }
