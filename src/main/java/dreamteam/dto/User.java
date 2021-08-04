@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.Range;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "andersen", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 
 public class User {
