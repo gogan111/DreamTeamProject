@@ -14,6 +14,13 @@ public class UserService {
     private UserDAO userDAO;
 
     public User saveUser(User user) {
+
+        if (user.getId() != 0) {
+            if (updateUser(user)) {
+                return user;
+            }
+        }
+
         return userDAO.saveUser(user);
     }
 

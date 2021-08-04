@@ -10,6 +10,10 @@
         <property name="hibernate.connection.driver_class">
             org.postgresql.Driver
         </property>
+
+
+        <!-- Assume ИМЯ ВАШЕЙ БД is the database name -->
+
         <property name="hibernate.connection.url">
             jdbc:postgresql://109.227.122.143:5432/userdb
         </property>
@@ -19,6 +23,12 @@
         <property name="hibernate.connection.password">
             admin
         </property>
+
+        <mapping class="dreamteam.dto.User"/>
+
+
+    </session-factory>
+
 
         <property name="hibernate.cache.use_second_level_cache">true</property>
         <property name="hibernate.cache.use_query_cache">true</property>
@@ -30,4 +40,5 @@
         <mapping class="dreamteam.dto.User"/>
 
     </session-factory>
+
 </hibernate-configuration>
